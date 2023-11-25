@@ -119,6 +119,7 @@ class Concert(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     date_time = db.Column(db.DateTime, nullable=False)
+    price = db.Column(db.Float, nullable=False)
     tix_low = db.Column(db.Integer)
     sold_out = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
