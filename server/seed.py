@@ -43,11 +43,12 @@ def create_concerts():
 
     for _ in range(20):
         c = Concert(
-            date_time=rand_date(),
-            tix_low=choices([True, False], weights=[0.15, 0.85], k=1)[0],
-            sold_out=False,
-            artist_id=rc(artist_ids),  # Randomly choose from available artist IDs
-            venue_id=rc(venue_ids)  # Randomly choose from available venue IDs
+            date_time = rand_date(),
+            price = round(randint(20, 76) / 5) * 5,
+            tix_low = choices([True, False], weights=[0.15, 0.85], k=1)[0],
+            sold_out = False,
+            artist_id = rc(artist_ids),  # Randomly choose from available artist IDs
+            venue_id = rc(venue_ids)  # Randomly choose from available venue IDs
         )
         concerts.append(c)
 

@@ -119,7 +119,7 @@ class Concert(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     date_time = db.Column(db.DateTime, nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     tix_low = db.Column(db.Integer)
     sold_out = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -155,7 +155,7 @@ class Concert(db.Model, SerializerMixin):
 
     @validates('date_time')
     def validates_date_time(self, _, new_date_time):
-        if not isinstance(datetime, new_date_time):
+        if not isinstance(new_date_time, datetime):
             raise TypeError(
                 'date_time must be a valid datetime object.'
             )
@@ -165,9 +165,21 @@ class Concert(db.Model, SerializerMixin):
             )
         return new_date_time
     
+    @validates('price')
+    def validates_price(self, _, new_price):
+        if not isinstance(new_price, int):
+            raise TypeError(
+                'Price must be an integer.'
+            )
+        elif new_price <= 0:
+            raise ValueError(
+                'Price must be a positive integer.'
+            )
+        return new_price
+    
     @validates('tix_low')
     def validates_tix_low(self, _, new_tix_low):
-        if not isinstance(bool, new_tix_low):
+        if not isinstance(new_tix_low, bool):
             raise TypeError(
                 'tix_low must be a boolean.'
             )
@@ -175,7 +187,7 @@ class Concert(db.Model, SerializerMixin):
     
     @validates('sold_out')
     def validates_sold_out(self, _, new_sold_out):
-        if not isinstance(bool, new_sold_out):
+        if not isinstance(new_sold_out, bool):
             raise TypeError(
                 'sold_out must be a boolean.'
             )
@@ -188,7 +200,7 @@ class Concert(db.Model, SerializerMixin):
                 'Artist ID is required.'
                 )
         artist = db.session.get(Artist, new_artist_id)
-        if not db.session.get(Artist, new_artist_id):
+        if not artist:
             raise ValueError(
                 'That artist does not exist in the database.'
                 )
@@ -231,7 +243,7 @@ class Review(db.Model, SerializerMixin):
     
     @validates('review_text')
     def validates_review_text(self, _, new_review_text):
-        if not isinstance(str, new_review_text):
+        if not isinstance(new_review_text, str):
             raise TypeError(
                 'Name must be a string.'
             )
