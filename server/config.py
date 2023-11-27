@@ -25,7 +25,8 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 # Instantiate REST API
-api = Api(app)
+# add prefix for CRUD api
+api = Api(app, prefix="/api/v1/")
 
 # Instantiate CORS
 CORS(app)

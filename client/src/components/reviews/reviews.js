@@ -17,7 +17,7 @@ const reviewData = [
 
 const Reviews = () => {
     return (
-        <Container>
+        <Container className="my-5 py-5">
           <Row>
             {reviewData.map(({name, reviewText}, i) => (
               <Col md={4} key={i}>

@@ -2,7 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const IntroBlurb = () => {
   return (
-    <Container className="my-5">
+    <Container className="my-5 py-3">
       <Row>
         <Col md={6}>
           <h2 className="display-6">Discover Live Music Like Never Before</h2>
