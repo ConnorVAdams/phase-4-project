@@ -4,6 +4,7 @@ import Artists from './pages/artists'
 import Concerts from './pages/concerts'
 import Venues from './pages/venues'
 import MyTickets from './pages/myTickets/myTickets'
+import AddConcert from './pages/addConcert'
 
 const routes = [
     {
@@ -29,6 +30,10 @@ const routes = [
             {
                 path: '/venues',
                 element: <Venues />
+            },
+            {
+                path: '/addConcert',
+                element: <AddConcert />
             }
         ]
     }

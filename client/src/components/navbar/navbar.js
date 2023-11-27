@@ -15,6 +15,7 @@ const Navbar = () => {
             <NavLink className="nav-link" to="/artists">Artists</NavLink>
             <NavLink className="nav-link" to="/concerts">Concerts</NavLink>
             <NavLink className="nav-link" to="/venues">Venues</NavLink>
+            <NavLink className="nav-link" to="/addConcert">Add Concert</NavLink>
           </Nav>
         </Navigation.Collapse>
       </Container>
