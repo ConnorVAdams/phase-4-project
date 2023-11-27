@@ -1,5 +1,11 @@
+import Header from "../../components/header"
+
 const Concerts = () => {
-    return <h1>Concerts</h1>
+    return (
+        <>
+            <Header text='All Concerts' />
+        </>
+    )
 }
 
 export default Concerts

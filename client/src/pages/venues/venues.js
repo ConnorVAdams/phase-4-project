@@ -1,5 +1,11 @@
+import Header from "../../components/header"
+
 const Venues = () => {
-    return <h1>venues</h1>
+    return (
+        <>
+            <Header text='All Venues' />
+        </>
+    )
 }
 
 export default Venues

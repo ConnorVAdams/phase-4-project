@@ -1,5 +1,11 @@
+import Header from "../../components/header"
+
 const Artists = () => {
-    return <h1>Artists</h1>
+    return (
+        <>
+            <Header text="All Artists"/>
+        </>
+    )
 }
 
 export default Artists

@@ -11,8 +11,9 @@ const Navbar = () => {
         <Navigation.Toggle aria-controls="basic-navbar-nav" />
         <Navigation.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink className="nav-link" to="/artists" >Artists</NavLink>
-            <NavLink className="nav-link" to="/concerts" >Concerts</NavLink>
+            <NavLink className="nav-link" to="/myTickets">My Tickets</NavLink>
+            <NavLink className="nav-link" to="/artists">Artists</NavLink>
+            <NavLink className="nav-link" to="/concerts">Concerts</NavLink>
             <NavLink className="nav-link" to="/venues">Venues</NavLink>
           </Nav>
         </Navigation.Collapse>
