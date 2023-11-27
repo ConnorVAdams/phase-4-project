@@ -53,7 +53,7 @@ class ArtistByID(Resource):
                 rules=(
                 )
             ), 200
-        return {'error': f'No artist with ID {id} found.'}
+        return {'error': f'No artist with ID {id} found.'}, 404
     
     def patch(self, id):
         data = request.get_json()
@@ -68,7 +68,7 @@ class ArtistByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 400
-        return {'error': f'No artist with ID {id} found.'}
+        return {'error': f'No artist with ID {id} found.'}, 404
     
     def delete(self, id):
         if artist := db.session.get(Artist, id):
@@ -79,7 +79,7 @@ class ArtistByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 422
-        return {'error': f'No artist with ID {id} found.'}
+        return {'error': f'No artist with ID {id} found.'}, 404
 
 api.add_resource(ArtistByID, '/artists/<int:id>')
 
@@ -92,7 +92,7 @@ class ConcertsForArtist(Resource):
                     '-artist',
                 )
             ) for concert in artist.concerts], 200
-        return {'error': f'No artist with ID {id} found.'}
+        return {'error': f'No artist with ID {id} found.'}, 404
 
 api.add_resource(ConcertsForArtist, '/artists/<int:id>/concerts')
 
@@ -132,7 +132,7 @@ class VenueByID(Resource):
 
                 )
             ), 200
-        return {'error': f'No venue with ID {id} found.'}
+        return {'error': f'No venue with ID {id} found.'}, 404
     
     def patch(self, id):
         data = request.get_json()
@@ -147,7 +147,7 @@ class VenueByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 400
-        return {'error': f'No venue with ID {id} found.'}
+        return {'error': f'No venue with ID {id} found.'}, 404
     
     def delete(self, id):
         if venue := db.session.get(Venue, id):
@@ -158,7 +158,7 @@ class VenueByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 422
-        return {'error': f'No venue with ID {id} found.'}
+        return {'error': f'No venue with ID {id} found.'}, 404
 
 api.add_resource(VenueByID, '/venues/<int:id>')
 
@@ -171,7 +171,7 @@ class ConcertsForVenue(Resource):
                     '-venue',
                 )
             ) for concert in venue.concerts], 200
-        return {'error': f'No venue with ID {id} found.'}
+        return {'error': f'No venue with ID {id} found.'}, 404
 
 api.add_resource(ConcertsForVenue, '/venues/<int:id>/concerts')
 
@@ -211,7 +211,7 @@ class ConcertByID(Resource):
 
                 )
             ), 200
-        return {'error': f'No concert with ID {id} found.'}
+        return {'error': f'No concert with ID {id} found.'}, 404
     
     def patch(self, id):
         data = request.get_json()
@@ -226,7 +226,7 @@ class ConcertByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 400
-        return {'error': f'No concert with ID {id} found.'}
+        return {'error': f'No concert with ID {id} found.'}, 404
     
     def delete(self, id):
         if concert := db.session.get(Concert, id):
@@ -237,7 +237,7 @@ class ConcertByID(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 422
-        return {'error': f'No concert with ID {id} found.'}
+        return {'error': f'No concert with ID {id} found.'}, 404
 
 api.add_resource(ConcertByID, '/concerts/<int:id>')
 

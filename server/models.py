@@ -114,6 +114,21 @@ class Artist(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Artist {self.id}: {self.name}>'
+    
+    @validates('description')
+    def validates_description(self, _, new_description):
+        if not isinstance(new_description, str):
+            raise TypeError(
+                'Description must be a string.'
+            )
+        elif not len(new_description) in range(1, 201):
+            raise ValueError(
+                'Description must be between 1 and 200 characters.'
+            )
+        return new_description
+
+    def __repr__(self):
+        return f'<Artist {self.id}: {self.name}>'
 
 class Concert(db.Model, SerializerMixin):
     __tablename__ = 'concerts'
