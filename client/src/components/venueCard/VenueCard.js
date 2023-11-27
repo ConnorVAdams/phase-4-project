@@ -2,8 +2,8 @@ import { Card } from 'react-bootstrap';
 
 const VenueCard = ({name, location}) => {
     return (
-        <Card>
-          <Card.Img variant="top" src="./assets/placeholder.jpg" />
+        <Card className="text-center">
+          <Card.Img variant="top" src="./assets/venue_placeholder.png" />
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
