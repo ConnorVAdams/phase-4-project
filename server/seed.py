@@ -9,7 +9,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, Venue, Artist, Concert, Review
+from models import db, Venue, Artist, Concert
 from helpers import rand_date
 
 fake = Faker()
@@ -54,19 +54,6 @@ def create_concerts():
 
     return concerts
 
-def create_reviews():
-    reviews = []
-    venue_ids = [venue.id for venue in Venue.query.all()]  # Get all venue IDs
-
-    for _ in range(10):
-        r = Review(
-            review_text='Lorem ipsum dolor sit amet...',
-            venue_id=rc(venue_ids)  # Randomly choose from available venue IDs
-        )
-        reviews.append(r)
-
-    return reviews
-
 if __name__ == '__main__':
     
     with app.app_context():
@@ -74,7 +61,6 @@ if __name__ == '__main__':
         Artist.query.delete()
         Venue.query.delete()
         Concert.query.delete()
-        Review.query.delete()
 
         print('Seeding artists...')
         artists = create_artists()
@@ -89,11 +75,6 @@ if __name__ == '__main__':
         print('Seeding concerts...')
         concerts = create_concerts()
         db.session.add_all(concerts)
-        db.session.commit()
-
-        print('Seeding reviews...')
-        reviews = create_reviews()
-        db.session.add_all(reviews)
         db.session.commit()
 
         print("Done seeding!")

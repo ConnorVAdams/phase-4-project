@@ -1,13 +1,13 @@
 import Jumbotron from "../../components/jumbotron/jumbotron"
 import IntroBlurb from "../../components/introBlurb"
-import Reviews from "../../components/reviews/reviews"
+import s from "../../components/s/s"
 
 const Home = () => {
     return (
         <>
             <Jumbotron />
             <IntroBlurb />
-            <Reviews />
+            <s />
         </>
     )
 }

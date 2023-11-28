@@ -1,6 +1,7 @@
 import * as Yup from 'yup'
+import artistFormSchema from '../artistForm/artistFormSchema'
 
-const addConcertSchema = Yup.object().shape({
+const concertFormSchema = Yup.object().shape({
     date: Yup
     .string()
     .required('Date is required.')
@@ -24,10 +25,10 @@ const addConcertSchema = Yup.object().shape({
     .integer('Price must be an integer.')
     .moreThan(-1, 'Price must be 0 or greater.'),
 
-    artist: Yup
-    .required('Artist is required.'),
+    // artist: artistFormSchema,
 
     venue: Yup
-    .required('Venue is required.')
-    , 
+    .required('Venue is required.'), 
 })
+
+export default concertFormSchema

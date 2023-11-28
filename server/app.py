@@ -10,7 +10,7 @@ from flask_restful import Resource
 from config import app, db, api
 
 # Add your model imports
-from models import db, Venue, Artist, Concert, Review
+from models import db, Venue, Artist, Concert
 
 # Views go here!
 

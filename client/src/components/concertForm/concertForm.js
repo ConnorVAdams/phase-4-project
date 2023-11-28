@@ -1,5 +1,106 @@
+import { useState, useEffect } from 'react'
+import { ErrorMessage, Field, Formik, Form } from 'formik'
+import concertFormSchema from './concertFormSchema'
+
 const ConcertForm = () => {
-    return <h1>I am the concert form</h1>
+    const [venues, setVenues] = useState([])
+
+    useEffect(() => {
+        const fetchVenues = async () => {
+            try {
+                const response = await fetch('/api/v1/venues')
+                if (response.ok) {
+                    const data = await response.json()
+                    setVenues(data.venues)
+                }
+            }
+        }
+    })
+    return (
+        <Formik
+            initialValues={{
+                date: '',
+                time: '',
+                price: '',
+                artist: '',
+                venue: ''
+            }}
+            validationSchema={concertFormSchema}
+            onSubmit={values => {
+                console.log(values)
+            }}
+        >
+            {formik => {
+                const { errors, touched, isValid, dirty } = formik
+                return (
+                    <div className='concert-form'>
+                        <h2>Add Concert</h2>
+                        <Form>
+                            <div className='form-field'>
+                                <label htmlFor='date'>Date</label>
+                                <Field
+                                    type='date'
+                                    name='date'
+                                    id='date'
+                                    className={errors.date && touched.date ? 'input-error' : null}
+                                />
+                                <ErrorMessage name='date' component='span' className='error'/>
+                            </div>
+                            
+                            <div className='form-field'>
+                                <label htmlFor='time'>Time</label>
+                                <Field
+                                    type='time'
+                                    name='time'
+                                    id='time'
+                                    className={errors.time && touched.time ? 'input-error' : null}
+                                />
+                                <ErrorMessage name='time' component='span' className='error'/>
+                            </div>
+
+                            <div className='form-field'>
+                                <label htmlFor='price'>Price</label>
+                                <Field
+                                    type='price'
+                                    name='price'
+                                    id='price'
+                                    className={errors.price && touched.price ? 'input-error' : null}
+                                />
+                                <ErrorMessage name='price' component='span' className='error'/>
+                            </div>
+
+                            {/* <div className='form-field'>
+                                <label htmlFor='artist'>Artist</label>
+                                <Field
+                                    type='artist'
+                                    name='artist'
+                                    id='artist'
+                                    className={errors.artist && touched.artist ? 'input-error' : null}
+                                />
+                                <ErrorMessage name='artist' component='span' className='error'/>
+                            </div> */}
+
+                            <div className='form-field'>
+                                <label htmlFor='venue'>venue</label>
+                                <Field
+                                    as='select'
+                                    type='venue'
+                                    name='venue'
+                                    id='venue'
+                                    className={errors.venue && touched.venue ? 'input-error' : null}
+                                >
+                                    <option value=''>Select Venue</option>
+
+                                </Field>
+                                <ErrorMessage name='venue' component='span' className='error'/>
+                            </div>
+
+                        </Form>
+                    </div>
+                )
+            }}
+        </Formik>
+    )
 }
 
 export default ConcertForm
