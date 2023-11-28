@@ -14,7 +14,7 @@ const Footer = () => {
           </Col>
           <Col md={4}>
             <h5>Brought to you by:</h5>
-            <img className="img-fluid rounded h-50" src="./assets/fis_logo.png" alt="Flatiron school logo"/>
+            <img className="img-fluid rounded h-50" src="../assets/fis_logo.png" alt="Flatiron school logo"/>
             <p className="lead">Flatiron School</p>
           </Col>
           <Col md={4}>

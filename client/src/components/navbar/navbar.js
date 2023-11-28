@@ -6,9 +6,9 @@ const Navbar = () => {
     <Navigation bg="dark" variant="dark" expand="lg">
       <Container to="/">
         <NavLink className="nav-link">
-            <Navigation.Brand href="#home">StageFinder</Navigation.Brand>
+            <Navigation.Brand>StageFinder</Navigation.Brand>
         </NavLink>
-        <Navigation.Toggle aria-controls="basic-navbar-nav" />
+        <Navigation.Toggle />
         <Navigation.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink className="nav-link" to="/myTickets">My Tickets</NavLink>

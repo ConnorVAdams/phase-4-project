@@ -16,10 +16,10 @@ const Artists = () => {
             <Header text="All Artists"/>
             <Container>
                 <Row>
-                    {data.map(({name, genre}) => {
+                    {data.map(({id, name, genre}) => {
                         return(
-                            <Col md={4}>
-                                <ArtistCard name={name} genre={genre} />
+                            <Col key={id} md={4}>
+                                <ArtistCard id={id} name={name} genre={genre} />
                             </Col>
                         )
                     })}
