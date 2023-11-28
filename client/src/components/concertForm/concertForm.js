@@ -11,11 +11,18 @@ const ConcertForm = () => {
                 const response = await fetch('/api/v1/venues')
                 if (response.ok) {
                     const data = await response.json()
-                    setVenues(data.venues)
+                    setVenues(data)
+                } else {
+                    console.error('Response not ok: ', response.status)
                 }
+            } catch (error) {
+                console.error('Failed to fetch venues: ', error)
             }
         }
-    })
+
+        fetchVenues()
+    }, [])
+
     return (
         <Formik
             initialValues={{
@@ -84,17 +91,27 @@ const ConcertForm = () => {
                                 <label htmlFor='venue'>venue</label>
                                 <Field
                                     as='select'
-                                    type='venue'
                                     name='venue'
                                     id='venue'
                                     className={errors.venue && touched.venue ? 'input-error' : null}
                                 >
                                     <option value=''>Select Venue</option>
-
+                                    {venues.map(venue => (
+                                        <option key={venue.id} value={venue.name}>
+                                            {venue.name}
+                                        </option>
+                                    ))}
                                 </Field>
                                 <ErrorMessage name='venue' component='span' className='error'/>
                             </div>
 
+                            <button
+                                type='submit'
+                                className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                                disabled={!(dirty && isValid)}
+                            >
+                                Submit
+                            </button>
                         </Form>
                     </div>
                 )
