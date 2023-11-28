@@ -3,17 +3,13 @@ import { Field } from 'formik';
 const hours = Array.from({ length: 12 }, (_, i) => i + 1)
 
 export const CustomHoursSelect = () => (
-    <Field
-        as='select'
-        name='hours'
-        id='hours'
-        className='custom-select'
-    >
-    {hours.map((hour) => (
-        <option key={hour} value={hour}>
+    <Field as='select' name='hours' id='hours' className='custom-select'>
+        <option value=''>HH</option> 
+        {hours.map((hour) => (
+            <option key={hour} value={hour}>
             {hour}
-        </option>
-    ))}
+            </option>
+        ))}
     </Field>
 )
 
@@ -24,6 +20,7 @@ export const CustomMinutesSelect = () => (
         id='minutes'
         className='custom-select'
     >
+        <option value=''>MM</option>
         <option value='00'>00</option>
         <option value='15'>15</option>
         <option value='30'>30</option>
@@ -38,6 +35,7 @@ export const CustomPeriodSelect = () => (
         id='period'
         className='custom-select'
     >
+        <option value=''>--</option>
         <option value='AM'>AM</option>
         <option value='PM'>PM</option>
     </Field>

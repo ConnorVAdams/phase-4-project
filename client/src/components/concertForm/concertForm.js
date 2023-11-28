@@ -106,8 +106,8 @@ const ConcertForm = () => {
 
                             <button
                                 type='submit'
-                                className={!(dirty && isValid) ? 'disabled-btn' : ''}
-                                disabled={!(dirty && isValid)}
+                                // className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                                // disabled={!(dirty && isValid)}
                             >
                                 Submit
                             </button>
