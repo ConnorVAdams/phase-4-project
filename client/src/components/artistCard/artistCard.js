@@ -1,6 +1,7 @@
 import { Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
-const ArtistCard = ({ name, genre }) => {
+const ArtistCard = ({ id, name, genre }) => {
     return (
         <Card className="text-center my-5">
             <Card.Header><i className="fa fa-music"></i> {genre}</Card.Header>
@@ -10,7 +11,9 @@ const ArtistCard = ({ name, genre }) => {
                 <Card.Text>
                     With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
-                <Button variant="primary" href="#">View Concerts</Button>
+                <Link to={`/artists/${id}`}>
+                    <Button variant="primary">View Concerts</Button>
+                </Link>
             </Card.Body>
         </Card>
     );

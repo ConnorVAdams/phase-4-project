@@ -17,8 +17,8 @@ const Venues = () => {
             <Header text='All Venues' />
             <Container>
                 <Row>
-                    {data.map(({ name, location }) => (
-                        <Col md={4}>
+                    {data.map(({ id, name, location }) => (
+                        <Col md={4} key={id}>
                             <VenueCard name={name} location={location} />
                         </Col>
                     ))}

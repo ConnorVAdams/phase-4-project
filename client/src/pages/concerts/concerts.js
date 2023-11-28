@@ -18,7 +18,7 @@ const Concerts = () => {
                 <Row>
                 {data.map((event, i) => {
                     return (
-                        <Col md={4}>
+                        <Col md={4} key={i}>
                             <ConcertCard event={event} />
                         </Col>
                     )
