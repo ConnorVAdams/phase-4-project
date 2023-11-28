@@ -19,7 +19,7 @@ const Venues = () => {
                 <Row>
                     {data.map(({ id, name, location }) => (
                         <Col md={4} key={id}>
-                            <VenueCard name={name} location={location} />
+                            <VenueCard id={id} name={name} location={location} />
                         </Col>
                     ))}
                 </Row>

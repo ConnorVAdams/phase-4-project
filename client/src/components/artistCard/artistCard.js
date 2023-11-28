@@ -8,11 +8,8 @@ const ArtistCard = ({ id, name, genre }) => {
             <Card.Img src="./assets/artist_placeholder.png" className="img-fluid"/>
             <Card.Body>
                 <Card.Title className="display-4">{name}</Card.Title>
-                <Card.Text>
-                    With supporting text below as a natural lead-in to additional content.
-                </Card.Text>
                 <Link to={`/artists/${id}`}>
-                    <Button variant="primary">View Concerts</Button>
+                    <Button variant="primary">View Tour Dates</Button>
                 </Link>
             </Card.Body>
         </Card>
