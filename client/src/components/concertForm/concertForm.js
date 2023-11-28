@@ -41,7 +41,6 @@ const ConcertForm = () => {
                 const { errors, touched, isValid, dirty } = formik
                 return (
                     <div className='concert-form'>
-                        <h2>Add Concert</h2>
                         <Form>
                             <div className='form-field'>
                                 <label htmlFor='date'>Date</label>
@@ -58,6 +57,7 @@ const ConcertForm = () => {
                                 <label htmlFor='time'>Time</label>
                                 <Field
                                     type='time'
+                                    step='900'
                                     name='time'
                                     id='time'
                                     className={errors.time && touched.time ? 'input-error' : null}
@@ -87,7 +87,7 @@ const ConcertForm = () => {
                                 <ErrorMessage name='artist' component='span' className='error'/>
                             </div> */}
 
-                            <div className='form-field'>
+                            {/* <div className='form-field'>
                                 <label htmlFor='venue'>venue</label>
                                 <Field
                                     as='select'
@@ -103,7 +103,7 @@ const ConcertForm = () => {
                                     ))}
                                 </Field>
                                 <ErrorMessage name='venue' component='span' className='error'/>
-                            </div>
+                            </div> */}
 
                             <button
                                 type='submit'
