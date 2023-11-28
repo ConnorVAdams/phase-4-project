@@ -186,7 +186,7 @@ class Concerts(Resource):
             rules=(
 
             )
-        ) for concert in Concert.query]
+        ) for concert in Concert.query.order_by(Concert.date_time)]
         return concerts, 200
     
     def post(self):
