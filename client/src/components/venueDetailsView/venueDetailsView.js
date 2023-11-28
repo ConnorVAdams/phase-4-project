@@ -4,8 +4,6 @@ import VenueConcertsCard from '../venueConcertsCard/venueConcertsCard'
 
 const VenueDetailsView = ({venue}) => {
 
-    console.log(venue)
-
     return (
         <Container className="my-5 text-center">
             <Row>

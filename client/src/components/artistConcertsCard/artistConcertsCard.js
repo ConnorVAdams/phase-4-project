@@ -3,7 +3,10 @@ import formatDateString from '../../util/formatDate';
 
 const ArtistConcertsCard = ({ concerts }) => {
 
-    console.log(concerts)
+    const logConcert = (e) => {
+        const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
+        console.log(concert)
+    }
 
     return (
         <Card>
@@ -21,7 +24,7 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 <i className="fa fa-map-marker-alt" style={{ color: "orangered" }}></i>
                                 {' '}{concert.venue.name}
                             </p>
-                            <Button variant="primary">Buy Tickets</Button>
+                            <Button onClick={logConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
                         </ListGroup.Item>
                     )
                 }) : ""}

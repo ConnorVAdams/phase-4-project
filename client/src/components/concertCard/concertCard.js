@@ -1,10 +1,14 @@
 import { Card, Button } from 'react-bootstrap';
 
 const ConcertCard = ({event}) => {
-    console.log(event)
+
     const artistName = event.artist.name
     const venueName = event.venue.name
     const venueLocation = event.venue.location
+
+    function logConcert(){
+        console.log(event)
+    }
     
     return (
         <Card className="text-center my-5">
@@ -13,9 +17,9 @@ const ConcertCard = ({event}) => {
                 <Card.Title className="display-4">{artistName}</Card.Title>
                 <Card.Text className="lead">{event.date}</Card.Text>
                 <Card.Text>
-                <i className="fa fa-map-marker-alt" style={{color: "orangered"}}></i> {venueName} | <i className="fa fa-city" style={{color: "grey"}}></i> {venueLocation} | <i className="fa fa-clock" style={{color: "black"}}></i> Doors: {event.time}
+                    <i className="fa fa-map-marker-alt" style={{color: "orangered"}}></i> {venueName} | <i className="fa fa-city" style={{color: "grey"}}></i> {venueLocation} | <i className="fa fa-clock" style={{color: "black"}}></i> Doors: {event.time}
                 </Card.Text>
-                <Button variant="primary">Buy tickets</Button>
+                <Button onClick={logConcert} variant="primary">Buy tickets</Button>
             </Card.Body>
         </Card>
     );

@@ -2,7 +2,12 @@ import { Card, ListGroup, Button } from 'react-bootstrap';
 import formatDateString from '../../util/formatDate';
 
 const VenueConcertsCard = ({concerts}) => {
-    console.log(concerts)
+
+    function logConcert(e){
+        const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.id))
+        console.log(concert)
+    }
+
     return (
         <Card>
             <Card.Header>Upcoming Events</Card.Header>
@@ -17,7 +22,7 @@ const VenueConcertsCard = ({concerts}) => {
 
                             <p>Doors: {concert.time}</p>
 
-                            <Button variant="primary">Buy tickets</Button>
+                            <Button onClick={logConcert} data-id={concert.id} variant="primary">Buy tickets</Button>
 
                         </ListGroup.Item>
                     )
