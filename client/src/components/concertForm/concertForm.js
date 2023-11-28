@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
+import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
@@ -55,14 +56,12 @@ const ConcertForm = () => {
                             
                             <div className='form-field'>
                                 <label htmlFor='time'>Time</label>
-                                <Field
-                                    type='time'
-                                    step='900'
-                                    name='time'
-                                    id='time'
-                                    className={errors.time && touched.time ? 'input-error' : null}
-                                />
-                                <ErrorMessage name='time' component='span' className='error'/>
+                                <div className='time-picker'>
+                                    <CustomHoursSelect />
+                                    <CustomMinutesSelect />
+                                    <CustomPeriodSelect />
+                                </div>
+                                <ErrorMessage name='time' component='span' className='error' />
                             </div>
 
                             <div className='form-field'>
@@ -87,8 +86,8 @@ const ConcertForm = () => {
                                 <ErrorMessage name='artist' component='span' className='error'/>
                             </div> */}
 
-                            {/* <div className='form-field'>
-                                <label htmlFor='venue'>venue</label>
+                            <div className='form-field'>
+                                <label htmlFor='venue'>Venue</label>
                                 <Field
                                     as='select'
                                     name='venue'
@@ -103,7 +102,7 @@ const ConcertForm = () => {
                                     ))}
                                 </Field>
                                 <ErrorMessage name='venue' component='span' className='error'/>
-                            </div> */}
+                            </div>
 
                             <button
                                 type='submit'
