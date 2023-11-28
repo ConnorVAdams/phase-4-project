@@ -15,7 +15,7 @@ const ConcertCard = ({event}) => {
                 <Card.Text>
                 <i className="fa fa-map-marker-alt" style={{color: "orangered"}}></i> {venueName} | <i className="fa fa-city" style={{color: "grey"}}></i> {venueLocation} | <i className="fa fa-clock" style={{color: "black"}}></i> Doors: {event.time}
                 </Card.Text>
-                <Button variant="primary">Purchase tickets</Button>
+                <Button variant="primary">Buy tickets</Button>
             </Card.Body>
         </Card>
     );

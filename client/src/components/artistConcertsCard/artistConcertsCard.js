@@ -7,11 +7,11 @@ const ArtistConcertsCard = ({ concerts }) => {
 
     return (
         <Card>
-            <Card.Header>Upcoming Concerts</Card.Header>
+            <Card.Header>Tour Schedule</Card.Header>
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
                     return (
-                        <ListGroup.Item className="lead">
+                        <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
                             <p>
                                 <i className="fa fa-city" style={{ color: "grey" }}></i>
@@ -21,7 +21,7 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 <i className="fa fa-map-marker-alt" style={{ color: "orangered" }}></i>
                                 {' '}{concert.venue.name}
                             </p>
-                            <Button variant="primary">Purchase tickets</Button>
+                            <Button variant="primary">Buy Tickets</Button>
                         </ListGroup.Item>
                     )
                 }) : ""}
