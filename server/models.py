@@ -175,10 +175,10 @@ class Concert(db.Model, SerializerMixin):
             raise TypeError(
                 'date_time must be a valid datetime object.'
             )
-        elif new_date_time < datetime.now():
-            raise ValueError(
-                'date_time must be in the future.'
-            )
+        # elif new_date_time < datetime.now():
+        #     raise ValueError(
+        #         'date_time must be in the future.'
+        #     )
         return new_date_time
     
     @validates('price')
