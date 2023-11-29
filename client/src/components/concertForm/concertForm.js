@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
+import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
+    const [artists, setArtists] = useState([[]])
 
     useEffect(() => {
         const fetchVenues = async () => {
@@ -23,6 +25,24 @@ const ConcertForm = () => {
         fetchVenues()
     }, [])
 
+    useEffect(() => {
+        const fetchArtists = async () => {
+            try {
+                const response = await fetch('/api/v1/artists')
+                if (response.ok) {
+                    const data = await response.json()
+                    setArtists(data)
+                } else {
+                    console.error('Response not ok: ', response.status)
+                }
+            } catch (error) {
+                console.error('Failed to fetch artists: ', error)
+            }
+        }
+
+        fetchArtists()
+    }, [])
+
     return (
         <Formik
             initialValues={{
@@ -33,7 +53,7 @@ const ConcertForm = () => {
                 venue: ''
             }}
             validationSchema={concertFormSchema}
-            onSubmit={values => {
+            onSubmit={(values) => {
                 console.log(values)
             }}
         >
@@ -57,7 +77,6 @@ const ConcertForm = () => {
                                 <label htmlFor='time'>Time</label>
                                 <Field
                                     type='time'
-                                    step='900'
                                     name='time'
                                     id='time'
                                     className={errors.time && touched.time ? 'input-error' : null}
@@ -76,19 +95,26 @@ const ConcertForm = () => {
                                 <ErrorMessage name='price' component='span' className='error'/>
                             </div>
 
-                            {/* <div className='form-field'>
+                            <div className='form-field'>
                                 <label htmlFor='artist'>Artist</label>
                                 <Field
-                                    type='artist'
+                                    as='select'
                                     name='artist'
                                     id='artist'
                                     className={errors.artist && touched.artist ? 'input-error' : null}
-                                />
+                                >
+                                    <option value=''>Select Artist</option>
+                                    {artists.map(artist => (
+                                        <option key={artist.id} value={artist.name}>
+                                            {artist.name}
+                                        </option>
+                                    ))}
+                                </Field>
                                 <ErrorMessage name='artist' component='span' className='error'/>
-                            </div> */}
+                            </div>
 
-                            {/* <div className='form-field'>
-                                <label htmlFor='venue'>venue</label>
+                            <div className='form-field'>
+                                <label htmlFor='venue'>Venue</label>
                                 <Field
                                     as='select'
                                     name='venue'
@@ -103,12 +129,11 @@ const ConcertForm = () => {
                                     ))}
                                 </Field>
                                 <ErrorMessage name='venue' component='span' className='error'/>
-                            </div> */}
+                            </div>
 
                             <button
                                 type='submit'
                                 className={!(dirty && isValid) ? 'disabled-btn' : ''}
-                                disabled={!(dirty && isValid)}
                             >
                                 Submit
                             </button>

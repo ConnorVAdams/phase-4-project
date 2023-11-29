@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request
 from flask_restful import Resource
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -192,6 +193,9 @@ class Concerts(Resource):
     def post(self):
         try:
             data = request.get_json()
+            data['date_time'] = datetime.strptime(data['date_time'], '%Y-%m-%d %H:%M')
+            print(data)
+            
             new_concert = Concert(**data)
             db.session.add(new_concert)
             db.session.commit()
