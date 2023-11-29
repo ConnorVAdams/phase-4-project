@@ -1,11 +1,11 @@
-import { useOutletContext } from "react-router";
+import { useOutletContext } from "react-router-dom";
 import Header from "../../components/header/header"
 import Ticket from "../../components/ticket/ticket";
 import { Container, Row, Col } from 'react-bootstrap'
 
 const MyTickets = () => {
 
-    const userTickets  = useOutletContext()
+    const {userTickets}  = useOutletContext()
     console.log(userTickets)
 
     // console.log(userTickets)
