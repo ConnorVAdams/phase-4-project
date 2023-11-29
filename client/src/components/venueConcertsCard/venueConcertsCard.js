@@ -1,11 +1,14 @@
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import formatDateString from '../../util/formatDate';
+import { useOutletContext } from 'react-router-dom';
 
 const VenueConcertsCard = ({concerts}) => {
 
-    function logConcert(e){
+    const { addToUserTickets } = useOutletContext()
+
+    function addConcert(e){
         const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.id))
-        console.log(concert)
+        addToUserTickets(concert)
     }
 
     return (
@@ -22,7 +25,7 @@ const VenueConcertsCard = ({concerts}) => {
 
                             <p>Doors: {concert.time}</p>
 
-                            <Button onClick={logConcert} data-id={concert.id} variant="primary">Buy tickets</Button>
+                            <Button onClick={addConcert} data-id={concert.id} variant="primary">Buy tickets</Button>
 
                         </ListGroup.Item>
                     )

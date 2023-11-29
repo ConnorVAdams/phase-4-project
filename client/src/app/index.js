@@ -10,8 +10,6 @@ const App = () => {
 
   const [ userTickets, setUserTickets ] = useState([])
 
-  console.log(userTickets)
-
   const addToUserTickets = (concert) => {
 
     const ticket = {

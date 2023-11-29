@@ -1,13 +1,16 @@
 import { Card, Button } from 'react-bootstrap';
+import { useOutletContext } from 'react-router-dom';
 
 const ConcertCard = ({event}) => {
+
+    const { addToUserTickets } = useOutletContext()
 
     const artistName = event.artist.name
     const venueName = event.venue.name
     const venueLocation = event.venue.location
 
-    function logConcert(){
-        console.log(event)
+    function addConcert(){
+        addToUserTickets(event)
     }
     
     return (
@@ -19,7 +22,7 @@ const ConcertCard = ({event}) => {
                 <Card.Text>
                     <i className="fa fa-map-marker-alt" style={{color: "orangered"}}></i> {venueName} | <i className="fa fa-city" style={{color: "grey"}}></i> {venueLocation} | <i className="fa fa-clock" style={{color: "black"}}></i> Doors: {event.time}
                 </Card.Text>
-                <Button onClick={logConcert} variant="primary">Buy tickets</Button>
+                <Button onClick={addConcert} variant="primary">Buy tickets</Button>
             </Card.Body>
         </Card>
     );

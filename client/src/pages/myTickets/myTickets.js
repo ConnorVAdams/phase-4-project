@@ -5,10 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 const MyTickets = () => {
 
-    const {userTickets}  = useOutletContext()
-    console.log(userTickets)
-
-    // console.log(userTickets)
+    const { userTickets }  = useOutletContext()
 
     return (
         <>
@@ -16,7 +13,11 @@ const MyTickets = () => {
             <Container className="my-5">
                 <Row>
                     <Col>
-                        <Ticket/>
+                        {userTickets.map((ticket, i) => {
+                            return (
+                                <Ticket key={ticket.id} ticket={ticket} />
+                            )
+                        })}
                     </Col>
                 </Row>
             </Container>
