@@ -1,9 +1,16 @@
 import { Card, Button, ListGroup } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
+import { useState } from 'react'
+import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 
 const ConcertCard = ({event}) => {
 
     const { addToUserTickets } = useOutletContext()
+
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
+
+    const handleShowModal = () => setShowModal(true); // Function to show the modal
+    const handleCloseModal = () => setShowModal(false); // Function to hide the modal
 
     const artistName = event.artist.name
     const venueName = event.venue.name
@@ -11,9 +18,11 @@ const ConcertCard = ({event}) => {
 
     function addConcert(){
         addToUserTickets(event)
+        handleShowModal()
     }
     
     return (
+        <>
         <Card className="text-center my-5">
             <Card.Img src="./assets/concert_placeholder.png" className="img-fluid"/>
             <ListGroup>
@@ -36,6 +45,8 @@ const ConcertCard = ({event}) => {
                 </ListGroup.Item>
             </ListGroup>
         </Card>
+        <BuyTicketModal show={showModal} handleClose={handleCloseModal} />
+        </>
     );
 }
 

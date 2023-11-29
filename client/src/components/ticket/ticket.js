@@ -7,8 +7,10 @@ const Ticket = ({ ticket }) => {
 
   const { concert } = ticket
 
+  console.log(ticket)
+
   return (
-    ticket ? (
+    concert ? (
       <Card className="text-center my-3">
         <Card.Header>{concert.date}</Card.Header>
         <Card.Body>
