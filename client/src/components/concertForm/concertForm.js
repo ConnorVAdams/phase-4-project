@@ -49,16 +49,16 @@ const ConcertForm = () => {
                 date: '',
                 time: '',
                 price: '',
-                artist: '',
-                venue: ''
+                artist_id: '',
+                venue_id_id: ''
             }}
             validationSchema={concertFormSchema}
             onSubmit={(values) => {
-                console.log(values)
+                
             }}
         >
             {formik => {
-                const { errors, touched, isValid, dirty } = formik
+                const { errors, touched } = formik
                 return (
                     <div className='concert-form'>
                         <Form>
@@ -96,11 +96,11 @@ const ConcertForm = () => {
                             </div>
 
                             <div className='form-field'>
-                                <label htmlFor='artist'>Artist</label>
+                                <label htmlFor='artist_id'>Artist</label>
                                 <Field
                                     as='select'
-                                    name='artist'
-                                    id='artist'
+                                    name='artist_id'
+                                    id='artist_id'
                                     className={errors.artist && touched.artist ? 'input-error' : null}
                                 >
                                     <option value=''>Select Artist</option>
@@ -110,15 +110,15 @@ const ConcertForm = () => {
                                         </option>
                                     ))}
                                 </Field>
-                                <ErrorMessage name='artist' component='span' className='error'/>
+                                <ErrorMessage name='artist_id' component='span' className='error'/>
                             </div>
 
                             <div className='form-field'>
-                                <label htmlFor='venue'>Venue</label>
+                                <label htmlFor='venue_id'>Venue</label>
                                 <Field
                                     as='select'
-                                    name='venue'
-                                    id='venue'
+                                    name='venue_id'
+                                    id='venue_id'
                                     className={errors.venue && touched.venue ? 'input-error' : null}
                                 >
                                     <option value=''>Select Venue</option>
@@ -128,15 +128,10 @@ const ConcertForm = () => {
                                         </option>
                                     ))}
                                 </Field>
-                                <ErrorMessage name='venue' component='span' className='error'/>
+                                <ErrorMessage name='venue_id' component='span' className='error'/>
                             </div>
 
-                            <button
-                                type='submit'
-                                className={!(dirty && isValid) ? 'disabled-btn' : ''}
-                            >
-                                Submit
-                            </button>
+                            <button type='submit'>Submit</button>
                         </Form>
                     </div>
                 )

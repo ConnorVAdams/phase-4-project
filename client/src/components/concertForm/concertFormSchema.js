@@ -19,12 +19,14 @@ const concertFormSchema = Yup.object().shape({
     .integer('Price must be an integer.')
     .moreThan(-1, 'Price must be 0 or greater.'),
 
-    artist: Yup
-    .string()
+    artist_id: Yup
+    .number()
+    .integer()
     .required('Artist is required.'), 
 
-    venue: Yup
-    .string()
+    venue_id: Yup
+    .number()
+    .integer()
     .required('Venue is required.'), 
 })
 
