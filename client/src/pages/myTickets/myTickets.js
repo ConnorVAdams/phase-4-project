@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import Header from "../../components/header/header"
-import Ticket from "../../components/ticket/ticket";
+import Ticket from "../../components/ticket";
 import { Container, Row, Col } from 'react-bootstrap'
 
 const MyTickets = () => {
