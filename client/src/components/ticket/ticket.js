@@ -20,7 +20,7 @@ const Ticket = ({ ticket }) => {
           <Button className="mx-2" variant="warning" disabled>Transfer</Button>
         </Card.Body>
       </Card>
-    ) : ""
+    ) : " "
   );
 }
 
