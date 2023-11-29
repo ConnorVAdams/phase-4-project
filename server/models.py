@@ -192,17 +192,17 @@ class Concert(db.Model, SerializerMixin):
     
     @validates('tix_low')
     def validates_tix_low(self, _, new_tix_low):
-        if not isinstance(new_tix_low, bool):
+        if not isinstance(new_tix_low, int):
             raise TypeError(
-                'tix_low must be a boolean.'
+                'tix_low must be an integer.'
             )
         return new_tix_low
     
     @validates('sold_out')
     def validates_sold_out(self, _, new_sold_out):
-        if not isinstance(new_sold_out, bool):
+        if not isinstance(new_sold_out, int):
             raise TypeError(
-                'sold_out must be a boolean.'
+                'sold_out must be an integer.'
             )
         return new_sold_out
     
