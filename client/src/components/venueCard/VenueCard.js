@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const VenueCard = ({id, name, location}) => {
     return (
-        <Card className="text-center">
+        <Card className="text-center my-5">
           <Card.Img variant="top" src="./assets/venue_placeholder.png" />
           <Card.Body>
             <Card.Title>{name}</Card.Title>

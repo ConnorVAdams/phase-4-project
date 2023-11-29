@@ -12,7 +12,7 @@ const ArtistDetailsView = ({ artist }) => {
                 </Col>
                 <Col>
                     <h1 className="display-1">{artist.name}</h1>
-                    <p className="lead mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat debitis facilis perspiciatis numquam sunt aperiam ipsa placeat nostrum error, recusandae tempora pariatur ut, suscipit deleniti eum rerum, impedit amet nisi!</p>
+                    <p className="lead mb-5">{artist.description}</p>
                     <ArtistConcertsCard concerts={artist.concerts}/>
                 </Col>
             </Row>

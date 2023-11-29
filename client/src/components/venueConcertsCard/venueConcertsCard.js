@@ -1,8 +1,17 @@
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import formatDateString from '../../util/formatDate';
+import { useOutletContext } from 'react-router-dom';
+import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 
 const VenueConcertsCard = ({concerts}) => {
-    console.log(concerts)
+
+    const { addToUserTickets } = useOutletContext()
+
+    function addConcert(e){
+        const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.id))
+        addToUserTickets(concert)
+    }
+
     return (
         <Card>
             <Card.Header>Upcoming Events</Card.Header>
@@ -16,8 +25,12 @@ const VenueConcertsCard = ({concerts}) => {
                             <p className="display-6">{concert.artist.name}</p>
 
                             <p>Doors: {concert.time}</p>
-
-                            <Button variant="primary">Buy tickets</Button>
+                            {concert.tix_low ? <LowTicketWarning /> : ''}
+                            {concert.sold_out ? 
+                            <Button variant="dark" disabled >Sold Out</Button>
+                            :
+                            <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
+                            }
 
                         </ListGroup.Item>
                     )

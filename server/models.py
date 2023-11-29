@@ -43,11 +43,9 @@ class Venue(db.Model, SerializerMixin):
     
     @validates('location')
     def validates_location(self, _, new_location):
-        approved_neighborhoods = ['Downtown', 'Westside', 'Broadway']
-        if new_location not in approved_neighborhoods:
-            return ValueError(
-                'Location must be one of the following: Downtown, Westside, Broadway'
-            )
+        if not isinstance(new_location, str):
+            raise TypeError("location must be a string")
+        
         return new_location
 
     @validates('link')
@@ -92,10 +90,6 @@ class Artist(db.Model, SerializerMixin):
             raise TypeError(
                 'Name must be a string.'
             )
-        elif not len(new_name) in range(1, 31):
-            raise ValueError(
-                'Name must be between 1 and 30 characters.'
-            )
         return new_name
     
     @validates('genre')
@@ -118,10 +112,6 @@ class Artist(db.Model, SerializerMixin):
         if not isinstance(new_description, str):
             raise TypeError(
                 'Description must be a string.'
-            )
-        elif not len(new_description) in range(1, 201):
-            raise ValueError(
-                'Description must be between 1 and 200 characters.'
             )
         return new_description
 
@@ -172,10 +162,6 @@ class Concert(db.Model, SerializerMixin):
             raise TypeError(
                 'date_time must be a valid datetime object.'
             )
-        # elif new_date_time < datetime.now():
-        #     raise ValueError(
-        #         'date_time must be in the future.'
-        #     )
         return new_date_time
     
     @validates('price')

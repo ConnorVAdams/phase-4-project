@@ -9,9 +9,7 @@ const URL = 'http://127.0.0.1:5000/api/v1/artists';
 const ArtistDetails = () => {
 
     const { id }  = useParams()
-    console.log(id)
     const { data } = useFetch(`${URL}/${id}`)
-    console.log(data)
 
     return <ArtistDetailsView artist={data} />
 }

@@ -9,8 +9,6 @@ const Concerts = () => {
 
     const { data } = useFetch(URL)
 
-    console.log(data)
-
     return (
         <>
             <Header text='All Concerts' />
