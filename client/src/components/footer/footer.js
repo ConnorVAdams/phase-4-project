@@ -8,8 +8,8 @@ const Footer = () => {
           <Col md={4}>
             <h5>Contributors</h5>
             <ul className="list-unstyled">
-              <li><p>Connor Adams <i className="fab fa-linkedin"></i> <i className="fab fa-github"></i></p></li>
-              <li><p>Zachary Talmadge <i className="fab fa-linkedin"></i> <i className="fab fa-github"></i></p></li>
+              <li><p className="lead">Connor Adams <i className="fab fa-linkedin"></i> <i className="fab fa-github"></i></p></li>
+              <li><p className="lead">Zachary Talmadge <i className="fab fa-linkedin"></i> <i className="fab fa-github"></i></p></li>
             </ul>
           </Col>
           <Col md={4}>

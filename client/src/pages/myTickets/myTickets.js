@@ -14,9 +14,7 @@ const MyTickets = () => {
                 <Row>
                     <Col>
                         {userTickets.map((ticket, i) => {
-                            return (
-                                <Ticket key={ticket.id} ticket={ticket} />
-                            )
+                            return <Ticket key={ticket.id} ticket={ticket} />
                         })}
                     </Col>
                 </Row>

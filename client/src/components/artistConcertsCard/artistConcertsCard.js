@@ -21,11 +21,9 @@ const ArtistConcertsCard = ({ concerts }) => {
                         <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
                             <p>
-                                <i className="fa fa-city" style={{ color: "grey" }}></i>
-                                {' '}{concert.venue.location}
-                            </p>
-                            <p>
                                 <i className="fa fa-map-marker-alt" style={{ color: "orangered" }}></i>
+                                {' '}{concert.venue.location}
+                                {' '}| 
                                 {' '}{concert.venue.name}
                             </p>
                             <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>

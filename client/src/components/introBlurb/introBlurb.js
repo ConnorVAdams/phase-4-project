@@ -1,4 +1,5 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 
 const IntroBlurb = () => {
   return (
@@ -9,6 +10,9 @@ const IntroBlurb = () => {
           <p className="lead">
             Step into the world of endless musical possibilities with our platform, where fans connect directly with artists and secure tickets to the most anticipated concerts. Experience the thrill of live performances and become part of a community that celebrates the power of music.
           </p>
+            <Link to="/artists">
+              <Button  size="lg" variant="secondary"> Find Artists</Button>
+            </Link>
           <hr />
           <h2 className="display-6">Your Gateway to Unforgettable Concert Experiences</h2>
           <p className="lead">
