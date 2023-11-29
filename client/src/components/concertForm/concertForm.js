@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
-import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
+// import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
@@ -50,12 +50,43 @@ const ConcertForm = () => {
                 time: '',
                 price: '',
                 artist_id: '',
-                venue_id_id: ''
+                venue_id: '',
+                tix_low: 0,
+                sold_out: 0
             }}
             validationSchema={concertFormSchema}
-            onSubmit={(values) => {
-                
-            }}
+            onSubmit={async (values) => {
+                values.date_time = `${values.date} ${values.time}`
+                values.price = Number(values.price)
+                values.artist_id = Number(values.artist_id)
+                values.venue_id = Number(values.venue_id)
+                values.tix_low = Number(values.tix_low)
+                values.sold_out = Number(values.sold_out)
+
+                delete values.date
+                delete values.time
+
+                console.log(values)
+
+                try {
+                    const response = await fetch('/api/v1/concerts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(values),
+                    })
+        
+                    if (response.ok) {
+                        console.log('Form submitted successfully:', response.status);
+                    } else {
+                        console.error('Error submitting form:', response.status);
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                }
+            }
+        }
         >
             {formik => {
                 const { errors, touched } = formik
@@ -105,7 +136,7 @@ const ConcertForm = () => {
                                 >
                                     <option value=''>Select Artist</option>
                                     {artists.map(artist => (
-                                        <option key={artist.id} value={artist.name}>
+                                        <option key={artist.id} value={artist.id}>
                                             {artist.name}
                                         </option>
                                     ))}
@@ -123,7 +154,7 @@ const ConcertForm = () => {
                                 >
                                     <option value=''>Select Venue</option>
                                     {venues.map(venue => (
-                                        <option key={venue.id} value={venue.name}>
+                                        <option key={venue.id} value={venue.id}>
                                             {venue.name}
                                         </option>
                                     ))}
