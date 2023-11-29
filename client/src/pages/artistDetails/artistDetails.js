@@ -11,6 +11,8 @@ const ArtistDetails = () => {
     const { id }  = useParams()
     const { data } = useFetch(`${URL}/${id}`)
 
+    console.log(data)
+
     return <ArtistDetailsView artist={data} />
 }
 

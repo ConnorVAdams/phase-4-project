@@ -17,6 +17,7 @@ const ArtistConcertsCard = ({ concerts }) => {
 
     const addConcert = (e) => {
         const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
+        console.log(concert)
         addToUserTickets(concert)
         handleShowModal()
     }
@@ -27,7 +28,6 @@ const ArtistConcertsCard = ({ concerts }) => {
             <Card.Header>Tour Schedule</Card.Header>
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
-                    console.log(concert)
                     return (
                         <>
                         <ListGroup.Item key={i} className="lead">

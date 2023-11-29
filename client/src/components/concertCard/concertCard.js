@@ -5,18 +5,20 @@ import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 
 const ConcertCard = ({event}) => {
 
+    
     const { addToUserTickets } = useOutletContext()
-
+    
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
+    
     const handleShowModal = () => setShowModal(true); // Function to show the modal
     const handleCloseModal = () => setShowModal(false); // Function to hide the modal
-
+    
     const artistName = event.artist.name
     const venueName = event.venue.name
     const venueLocation = event.venue.location
-
+    
     function addConcert(){
+        console.log(event)
         addToUserTickets(event)
         handleShowModal()
     }

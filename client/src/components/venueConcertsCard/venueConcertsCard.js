@@ -6,11 +6,14 @@ import { useState } from 'react'
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 
 const VenueConcertsCard = ({ concerts }) => {
+    // console.log(concerts)
 
     const { addToUserTickets } = useOutletContext()
 
     function addConcert(e) {
-        const [concert] = concerts.filter(concert => concert.id === Number(e.target.dataset.id))
+        const [concert] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
+        // console.log(e.target.dataset.concert_id)
+        // console.log(concert)
         addToUserTickets(concert)
         handleShowModal()
     }
@@ -27,6 +30,7 @@ const VenueConcertsCard = ({ concerts }) => {
                 <Card.Header>Upcoming Events</Card.Header>
                 <ListGroup variant="flush">
                     {concerts ? concerts.map((concert, i) => {
+                        // console.log(concert.id)
                         return (
                             <ListGroup.Item key={i} className="lead">
 

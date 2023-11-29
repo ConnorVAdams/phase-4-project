@@ -88,9 +88,6 @@ class ConcertsForArtist(Resource):
     def get(self, id):
         if artist := db.session.get(Artist, id):
             return [concert.to_dict(
-                rules=(
-                    '-artist',
-                )
             ) for concert in artist.concerts], 200
         return {'error': f'No artist with ID {id} found.'}, 404
 
@@ -167,9 +164,7 @@ class ConcertsForVenue(Resource):
     def get(self, id):
         if venue := db.session.get(Venue, id):
             return [concert.to_dict(
-                rules=(
-                    '-venue',
-                )
+               
             ) for concert in venue.concerts], 200
         return {'error': f'No venue with ID {id} found.'}, 404
 
@@ -207,9 +202,6 @@ class ConcertByID(Resource):
     def get(self, id):
         if concert := db.session.get(Concert, id):
             return concert.to_dict(
-                rules=(
-
-                )
             ), 200
         return {'error': f'No concert with ID {id} found.'}, 404
     

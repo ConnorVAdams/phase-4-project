@@ -1,8 +1,19 @@
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import VenueConcertsCard from '../venueConcertsCard/venueConcertsCard'
+import { useFetch } from '../../hooks/customHooks'
+
+const URL = 'http://127.0.0.1:5000/api/v1/venues'
+
 
 const VenueDetailsView = ({venue}) => {
+
+    // console.log(venue)
+
+    // console.log(venue)
+
+    const {data: concerts} = useFetch(`${URL}/${venue.id}/concerts`)
+    console.log(concerts)
 
     return (
         <Container className="my-5 text-center">
@@ -13,7 +24,7 @@ const VenueDetailsView = ({venue}) => {
                 <Col md={6}>
                     <h1 className="display-1">{venue.name}</h1>
                     <p className="lead"><i className="fa fa-map-marker-alt" style={{color: "orangered"}}></i> {venue.location}</p>
-                    <VenueConcertsCard concerts={venue.concerts} />
+                    <VenueConcertsCard concerts={concerts} />
                 </Col>
             </Row>
             <Row className="my-5">

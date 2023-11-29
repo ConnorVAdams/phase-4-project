@@ -1,8 +1,14 @@
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ArtistConcertsCard from '../artistConcertsCard'
+import { useFetch } from '../../hooks/customHooks'
+
+const URL = 'http://127.0.0.1:5000/api/v1/artists'
 
 const ArtistDetailsView = ({ artist }) => {
+
+    const { data: concerts } = useFetch(`${URL}/${artist.id}/concerts`)
+    console.log(concerts)
 
     return (
         <Container className="text-center my-5">
@@ -13,7 +19,7 @@ const ArtistDetailsView = ({ artist }) => {
                 <Col>
                     <h1 className="display-1">{artist.name}</h1>
                     <p className="lead mb-5">{artist.description}</p>
-                    <ArtistConcertsCard concerts={artist.concerts}/>
+                    <ArtistConcertsCard concerts={concerts}/>
                 </Col>
             </Row>
             <Row>
