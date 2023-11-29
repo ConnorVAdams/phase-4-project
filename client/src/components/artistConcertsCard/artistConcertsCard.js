@@ -17,6 +17,7 @@ const ArtistConcertsCard = ({ concerts }) => {
             <Card.Header>Tour Schedule</Card.Header>
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
+                    console.log(concert)
                     return (
                         <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
@@ -26,7 +27,14 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 {' '}| 
                                 {' '}{concert.venue.name}
                             </p>
+
+                            {concert.sold_out ? 
+
+                            <Button variant="dark" disabled >Sold Out</Button>
+                            :
                             <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
+                            }
+
                         </ListGroup.Item>
                     )
                 }) : ""}
