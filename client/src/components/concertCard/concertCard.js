@@ -28,7 +28,11 @@ const ConcertCard = ({event}) => {
                     <div className="my-2">Doors: {event.time}</div>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                    <Button onClick={addConcert} className="my-2" variant="primary">Buy tickets</Button>
+                    {event.sold_out ? 
+                    <Button variant="dark" disabled >Sold Out</Button>
+                    :
+                    <Button onClick={addConcert} data-concert_id={event.id} variant="primary">Buy Tickets</Button>
+                    }
                 </ListGroup.Item>
             </ListGroup>
         </Card>

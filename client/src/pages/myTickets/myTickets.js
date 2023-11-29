@@ -13,9 +13,9 @@ const MyTickets = () => {
             <Container className="my-5">
                 <Row>
                     <Col>
-                        {userTickets.map((ticket, i) => {
+                        {userTickets ? userTickets.map((ticket, i) => {
                             return <Ticket key={ticket.id} ticket={ticket} />
-                        })}
+                        }): ""}
                     </Col>
                 </Row>
             </Container>
