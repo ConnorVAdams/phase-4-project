@@ -19,13 +19,11 @@ class Venue(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     concerts = db.relationship('Concert', back_populates='venue', cascade='all, delete-orphan')
-    reviews = db.relationship('Review', back_populates='venue', cascade='all, delete-orphan')
 
     artists = association_proxy('concerts', 'venue')
 
     serialize_rules = (
         '-concerts.venue', 
-        '-reviews.venue', 
         '-artists.venues',
         '-created_at',
         '-updated_at'
@@ -45,11 +43,9 @@ class Venue(db.Model, SerializerMixin):
     
     @validates('location')
     def validates_location(self, _, new_location):
-        approved_neighborhoods = ['Downtown', 'Westside', 'Broadway']
-        if new_location not in approved_neighborhoods:
-            return ValueError(
-                'Location must be one of the following: Downtown, Westside, Broadway'
-            )
+        if not isinstance(new_location, str):
+            raise TypeError("location must be a string")
+        
         return new_location
 
     @validates('link')
@@ -94,10 +90,6 @@ class Artist(db.Model, SerializerMixin):
             raise TypeError(
                 'Name must be a string.'
             )
-        elif not len(new_name) in range(1, 31):
-            raise ValueError(
-                'Name must be between 1 and 30 characters.'
-            )
         return new_name
     
     @validates('genre')
@@ -120,10 +112,6 @@ class Artist(db.Model, SerializerMixin):
         if not isinstance(new_description, str):
             raise TypeError(
                 'Description must be a string.'
-            )
-        elif not len(new_description) in range(1, 201):
-            raise ValueError(
-                'Description must be between 1 and 200 characters.'
             )
         return new_description
 
@@ -160,7 +148,6 @@ class Concert(db.Model, SerializerMixin):
         '-venue.concerts',
         '-created_at',
         '-updated_at',
-        '-venue.reviews',
         '-venue.link',
         '-artist_id',
         '-venue_id',
@@ -175,10 +162,6 @@ class Concert(db.Model, SerializerMixin):
             raise TypeError(
                 'date_time must be a valid datetime object.'
             )
-        # elif new_date_time < datetime.now():
-        #     raise ValueError(
-        #         'date_time must be in the future.'
-        #     )
         return new_date_time
     
     @validates('price')
@@ -239,49 +222,3 @@ class Concert(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Concert {self.id}:\nArtist:{self.artist}\nVenue:{self.venue}>'
-
-class Review(db.Model, SerializerMixin):
-    __tablename__ = 'reviews'
-
-    id = db.Column(db.Integer, primary_key=True)
-    review_text = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'))
-
-    venue = db.relationship('Venue', back_populates='reviews')
-
-    serialize_rules = (
-        '-venue.reviews',
-        '-created_at',
-        '-updated_at')
-    
-    @validates('review_text')
-    def validates_review_text(self, _, new_review_text):
-        if not isinstance(new_review_text, str):
-            raise TypeError(
-                'Name must be a string.'
-            )
-        elif not len(new_review_text) in range(1, 400):
-            raise ValueError(
-                'Name must be between 1 and 400 characters.'
-            )
-        return new_review_text
-    
-    @validates('venue_id')
-    def validate_venue_id(self, _, new_venue_id):
-        if new_venue_id == None:
-            raise ValueError(
-                'Venue ID is required.'
-                )
-        venue = db.session.get(Venue, new_venue_id)
-        if not venue:
-            raise ValueError(
-                'That venue does not exist in the database.'
-                )
-        self.venue = venue
-        return new_venue_id
-
-    def __repr__(self):
-        return f'<Review {self.id}>'

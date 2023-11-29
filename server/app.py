@@ -10,7 +10,7 @@ from flask_restful import Resource
 from config import app, db, api
 
 # Add your model imports
-from models import db, Venue, Artist, Concert, Review
+from models import db, Venue, Artist, Concert
 
 # Views go here!
 
@@ -186,7 +186,7 @@ class Concerts(Resource):
             rules=(
 
             )
-        ) for concert in Concert.query]
+        ) for concert in Concert.query.order_by(Concert.date_time)]
         return concerts, 200
     
     def post(self):
