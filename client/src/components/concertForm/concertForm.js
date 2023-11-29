@@ -5,6 +5,7 @@ import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './ti
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
+    const [artists, setArtists] = useState([[]])
 
     useEffect(() => {
         const fetchVenues = async () => {
@@ -24,6 +25,24 @@ const ConcertForm = () => {
         fetchVenues()
     }, [])
 
+    useEffect(() => {
+        const fetchArtists = async () => {
+            try {
+                const response = await fetch('/api/v1/artists')
+                if (response.ok) {
+                    const data = await response.json()
+                    setArtists(data)
+                } else {
+                    console.error('Response not ok: ', response.status)
+                }
+            } catch (error) {
+                console.error('Failed to fetch artists: ', error)
+            }
+        }
+
+        fetchArtists()
+    }, [])
+
     return (
         <Formik
             initialValues={{
@@ -34,7 +53,7 @@ const ConcertForm = () => {
                 venue: ''
             }}
             validationSchema={concertFormSchema}
-            onSubmit={values => {
+            onSubmit={(values) => {
                 console.log(values)
             }}
         >
@@ -56,12 +75,13 @@ const ConcertForm = () => {
                             
                             <div className='form-field'>
                                 <label htmlFor='time'>Time</label>
-                                <div className='time-picker'>
-                                    <CustomHoursSelect />
-                                    <CustomMinutesSelect />
-                                    <CustomPeriodSelect />
-                                </div>
-                                <ErrorMessage name='time' component='span' className='error' />
+                                <Field
+                                    type='time'
+                                    name='time'
+                                    id='time'
+                                    className={errors.time && touched.time ? 'input-error' : null}
+                                />
+                                <ErrorMessage name='time' component='span' className='error'/>
                             </div>
 
                             <div className='form-field'>
@@ -75,16 +95,23 @@ const ConcertForm = () => {
                                 <ErrorMessage name='price' component='span' className='error'/>
                             </div>
 
-                            {/* <div className='form-field'>
+                            <div className='form-field'>
                                 <label htmlFor='artist'>Artist</label>
                                 <Field
-                                    type='artist'
+                                    as='select'
                                     name='artist'
                                     id='artist'
                                     className={errors.artist && touched.artist ? 'input-error' : null}
-                                />
+                                >
+                                    <option value=''>Select Artist</option>
+                                    {artists.map(artist => (
+                                        <option key={artist.id} value={artist.name}>
+                                            {artist.name}
+                                        </option>
+                                    ))}
+                                </Field>
                                 <ErrorMessage name='artist' component='span' className='error'/>
-                            </div> */}
+                            </div>
 
                             <div className='form-field'>
                                 <label htmlFor='venue'>Venue</label>
@@ -106,8 +133,7 @@ const ConcertForm = () => {
 
                             <button
                                 type='submit'
-                                // className={!(dirty && isValid) ? 'disabled-btn' : ''}
-                                // disabled={!(dirty && isValid)}
+                                className={!(dirty && isValid) ? 'disabled-btn' : ''}
                             >
                                 Submit
                             </button>
