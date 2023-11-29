@@ -3,7 +3,7 @@ import ArtistCard from '../../components/artistCard'
 import { useFetch } from '../../hooks/customHooks'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useState } from 'react'
-import SearchByName from "../../components/searchBar/searchBar"
+import SearchBar from "../../components/searchBar/searchBar"
 
 
 const URL = 'http://127.0.0.1:5000/api/v1/artists'
@@ -38,8 +38,12 @@ const Artists = () => {
             <Header text="All Artists"/>
             <Container>
                 <Row>
-                    <Col md={6}><SearchByName label="Filter By Name" searchTerm={changeSearchByName}/></Col>
-                    <Col md={6}><SearchByName label="Filter By Genre" searchTerm={changeSearchByGenre}/></Col>
+                    <Col md={6}>
+                        <SearchBar label="Filter By Name" searchTerm={changeSearchByName}/>
+                    </Col>
+                    <Col md={6}>
+                        <SearchBar label="Filter By Genre" searchTerm={changeSearchByGenre}/>
+                    </Col>
                 </Row>
                 <Row>
                     {filteredArists.map(({id, name, genre}) => {
