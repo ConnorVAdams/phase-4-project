@@ -1,6 +1,7 @@
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import formatDateString from '../../util/formatDate';
 import { useOutletContext } from 'react-router-dom';
+import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 
 const ArtistConcertsCard = ({ concerts }) => {
 
@@ -27,6 +28,7 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 {' '}| 
                                 {' '}{concert.venue.name}
                             </p>
+                            {concert.tix_low ? <LowTicketWarning /> : ''}
                             {concert.sold_out ? 
                             <Button variant="dark" disabled >Sold Out</Button>
                             :
