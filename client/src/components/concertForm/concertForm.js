@@ -6,6 +6,7 @@ import concertFormSchema from './concertFormSchema'
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
     const [artists, setArtists] = useState([[]])
+    const [newArtist, setNewArtist] = useState(false)
 
     useEffect(() => {
         const fetchVenues = async () => {
@@ -87,12 +88,12 @@ const ConcertForm = () => {
         }
         >
             {formik => {
-                const { errors, touched } = formik
+                const { errors, touched, setFieldValue } = formik
                 return (
                     <div className='concert-form'>
                         <Form>
                             <div className='form-field'>
-                                <label htmlFor='date'>Date</label>
+                                <label htmlFor='date'>Date</label><br/>
                                 <Field
                                     type='date'
                                     name='date'
@@ -103,7 +104,7 @@ const ConcertForm = () => {
                             </div>
                             
                             <div className='form-field'>
-                                <label htmlFor='time'>Time</label>
+                                <label htmlFor='time'>Time</label><br/>
                                 <Field
                                     type='time'
                                     name='time'
@@ -114,7 +115,7 @@ const ConcertForm = () => {
                             </div>
 
                             <div className='form-field'>
-                                <label htmlFor='price'>Price</label>
+                                <label htmlFor='price'>Price</label><br/>
                                 <Field
                                     type='price'
                                     name='price'
@@ -125,12 +126,16 @@ const ConcertForm = () => {
                             </div>
 
                             <div className='form-field'>
-                                <label htmlFor='artist_id'>Artist</label>
+                                <label htmlFor='artist_id'>Choose Existing Artist</label><br/>
                                 <Field
                                     as='select'
                                     name='artist_id'
                                     id='artist_id'
                                     className={errors.artist && touched.artist ? 'input-error' : null}
+                                    onChange={(e) => {
+                                        setFieldValue('artist_id', e.target.value)
+                                        setNewArtist(false)
+                                    }}
                                 >
                                     <option value=''>Select Artist</option>
                                     {artists.map(artist => (
@@ -138,12 +143,51 @@ const ConcertForm = () => {
                                             {artist.name}
                                         </option>
                                     ))}
-                                </Field>
+                                </Field><br/>
                                 <ErrorMessage name='artist_id' component='span' className='error'/>
+
+                                {!newArtist && (
+                                    <>
+                                        <label htmlFor='add_new_artist_btn'>or Add New Artist</label><br/>
+                                        <button 
+                                            type='button' 
+                                            name='add_new_artist_btn'
+                                            onClick={() => setNewArtist(true)}>
+                                            New Artist
+                                        </button>
+                                    </>
+                                )}
+
+                                {newArtist && (
+                                    <>
+                                        <div class='form-field'>
+                                            <label htmlFor='artist_name'>Name</label>
+                                            <Field
+                                                type='text'
+                                                name='artist_name'
+                                                id='artist_name'
+                                                className={errors.artist_name && touched.artist_name ? 'input-error' : null}
+                                            />
+                                            <ErrorMessage name='artist_name' component='span' className='error'/>
+                                        </div>
+
+                                        <div class='form-field'>
+                                        <label htmlFor='artist_genre'>Genre</label>
+                                        <Field
+                                            type='text'
+                                            name='artist_genre'
+                                            id='artist_genre'
+                                            className={errors.artist_genre && touched.artist_genre ? 'input-error' : null}
+                                        />
+                                        <ErrorMessage name='artist_genre' component='span' className='error'/>
+                                        </div>
+
+                                    </>
+                                )}
                             </div>
 
                             <div className='form-field'>
-                                <label htmlFor='venue_id'>Venue</label>
+                                <label htmlFor='venue_id'>Venue</label><br/>
                                 <Field
                                     as='select'
                                     name='venue_id'
