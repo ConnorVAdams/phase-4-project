@@ -193,7 +193,6 @@ class Concerts(Resource):
         try:
             data = request.get_json()
             data['date_time'] = datetime.strptime(data['date_time'], '%Y-%m-%d %H:%M')
-            print(data)
             new_concert = Concert(**data)
             db.session.add(new_concert)
             db.session.commit()

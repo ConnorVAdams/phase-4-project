@@ -66,8 +66,6 @@ const ConcertForm = () => {
                 delete values.date
                 delete values.time
 
-                console.log(values)
-
                 try {
                     const response = await fetch('/api/v1/concerts', {
                         method: 'POST',
