@@ -3,7 +3,7 @@ import VenueCard from "../../components/venueCard/VenueCard"
 import { useFetch } from '../../hooks/customHooks'
 import { Container, Row, Col } from 'react-bootstrap'
 
-const URL = 'http://127.0.0.1:5000/api/v1/venues'
+const URL = 'http://127.0.0.1:5555/api/v1/venues'
 
 
 const Venues = () => {

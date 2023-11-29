@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from '../../hooks/customHooks'
 import VenueDetailsView from '../../components/venueDetailsView'
 
-const URL = 'http://127.0.0.1:5000/api/v1/venues';
+const URL = 'http://127.0.0.5555/api/v1/venues';
 
 const VenueDetails = () => {
 
