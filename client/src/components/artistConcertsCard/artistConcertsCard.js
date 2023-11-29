@@ -27,14 +27,11 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 {' '}| 
                                 {' '}{concert.venue.name}
                             </p>
-
                             {concert.sold_out ? 
-
                             <Button variant="dark" disabled >Sold Out</Button>
                             :
                             <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
                             }
-
                         </ListGroup.Item>
                     )
                 }) : ""}

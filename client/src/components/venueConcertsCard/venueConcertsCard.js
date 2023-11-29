@@ -25,7 +25,11 @@ const VenueConcertsCard = ({concerts}) => {
 
                             <p>Doors: {concert.time}</p>
 
-                            <Button onClick={addConcert} data-id={concert.id} variant="primary">Buy tickets</Button>
+                            {concert.sold_out ? 
+                            <Button variant="dark" disabled >Sold Out</Button>
+                            :
+                            <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
+                            }
 
                         </ListGroup.Item>
                     )
