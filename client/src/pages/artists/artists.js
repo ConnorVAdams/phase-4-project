@@ -17,12 +17,10 @@ const Artists = () => {
 
     const changeSearchByName = (e) => {
         setSearchByName(e.target.value)
-        console.log('this is the name filter', searchName)
     }
 
     const changeSearchByGenre = (e) => {
         setSearchGenre(e.target.value)
-        console.log('This is the genre filter' , searchGenre)
     }
 
     const filteredArists = data
