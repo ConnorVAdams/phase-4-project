@@ -1,0 +1,8 @@
+#homeJumbo {
+    background-image: url("../../../public/assets/jumbotron-concert-photo.jpg");
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-shadow: black 0px 0 15px;
+}

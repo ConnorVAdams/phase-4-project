@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import ConcertCard from "../../components/concertCard/concertCard"
 import SearchBar from '../../components/searchBar'
 import { useState } from 'react'
+import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron"
 
 const URL = "http://127.0.0.1:5000/api/v1/concerts"
 
@@ -34,7 +35,7 @@ const Concerts = () => {
 
     return (
         <>
-            <Header text='All Concerts' />
+            <ModelJumbotron image="./assets/jumbotron-concert-photo.jpg" text="All Concerts" />
             <Container>
                 <Row>
                     <Col>

@@ -2,7 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 bg-dark text-white text-center">
+    <footer className="footer mt-auto py-3 bg-dark text-white text-center" style={{height: "100vh"}}>
       <Container>
         <Row>
           <Col md={4}>
@@ -19,11 +19,13 @@ const Footer = () => {
           </Col>
           <Col md={4}>
             <h5>Social Media</h5>
-            <i className="fab mx-3 fa-facebook" style={{ fontSize: "50px" }}></i>
-            <i className="fab mx-3 fa-instagram" style={{ fontSize: "50px" }}></i>
-            <i className="fab mx-3 fa-linkedin" style={{ fontSize: "50px" }}></i>
-            <i className="fab mx-3 fa-github" style={{ fontSize: "50px" }}></i>
-            <i className="fab mx-3 fa-discord" style={{ fontSize: "50px" }}></i>
+            <div style={{ fontSize: "50px" }}>
+              <i className="fab mx-3 fa-facebook"></i>
+              <i className="fab mx-3 fa-instagram"></i>
+              <i className="fab mx-3 fa-linkedin"></i>
+              <i className="fab mx-3 fa-github"></i>
+              <i className="fab mx-3 fa-discord"></i>
+            </div>
           </Col>
         </Row>
       </Container>
