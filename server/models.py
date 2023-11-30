@@ -18,7 +18,7 @@ class Venue(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    concerts = db.relationship('Concert', back_populates='venue', cascade='all, delete-orphan')
+    concerts = db.relationship('Concert', order_by='Concert.date_time', back_populates='venue', cascade='all, delete-orphan')
 
     artists = association_proxy('concerts', 'venue')
 
@@ -73,7 +73,7 @@ class Artist(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    concerts = db.relationship('Concert', back_populates='artist', cascade='all, delete-orphan')
+    concerts = db.relationship('Concert', order_by='Concert.date_time', back_populates='artist', cascade='all, delete-orphan')
 
     venues = association_proxy('concerts', 'artist')
 
@@ -89,6 +89,10 @@ class Artist(db.Model, SerializerMixin):
         if not isinstance(new_name, str):
             raise TypeError(
                 'Name must be a string.'
+            )
+        elif not len(new_name) in range(1, 31):
+            raise ValueError(
+                'Genre must be between 1 and 30 characters.'
             )
         return new_name
     
@@ -113,6 +117,10 @@ class Artist(db.Model, SerializerMixin):
             raise TypeError(
                 'Description must be a string.'
             )
+        # elif not len(new_description) in range(1, 201):
+        #     raise ValueError(
+        #         'Description must be between 1 and 200 characters.'
+        #     )
         return new_description
 
     def __repr__(self):
