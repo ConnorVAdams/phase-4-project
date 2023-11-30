@@ -54,7 +54,7 @@ const ConcertForm = () => {
                 tix_low: 0,
                 sold_out: 0
             }}
-            validationSchema={concertFormSchema}
+            validationSchema={concertFormSchema(newArtist)}
             onSubmit={async (values) => {
                 values.date_time = `${values.date} ${values.time}`
                 values.price = Number(values.price)
