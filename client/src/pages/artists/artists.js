@@ -48,7 +48,7 @@ const Artists = () => {
                 <Row>
                     {filteredArists.map(({id, name, genre}) => {
                         return(
-                            <Col key={id} md={4}>
+                            <Col key={id} md={3}>
                                 <ArtistCard id={id} name={name} genre={genre} />
                             </Col>
                         )

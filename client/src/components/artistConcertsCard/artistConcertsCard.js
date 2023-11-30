@@ -4,9 +4,12 @@ import { useOutletContext } from 'react-router-dom';
 import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 import { useState } from 'react'
+import sortByDate from '../../util/sortByDate'
 
 
 const ArtistConcertsCard = ({ concerts }) => {
+
+    concerts = concerts.sort(sortByDate)
 
     const { addToUserTickets } = useOutletContext()
 

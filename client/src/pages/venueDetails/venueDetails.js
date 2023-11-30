@@ -9,6 +9,8 @@ const VenueDetails = () => {
     const { id }  = useParams()
     const { data } = useFetch(`${URL}/${id}`)
 
+    console.log(data)
+
     return <VenueDetailsView venue={data} />
 }
 

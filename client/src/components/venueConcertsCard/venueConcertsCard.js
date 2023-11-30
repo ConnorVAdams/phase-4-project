@@ -4,16 +4,20 @@ import { useOutletContext } from 'react-router-dom';
 import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 import { useState } from 'react'
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
+import sortByDate from '../../util/sortByDate';
 
 const VenueConcertsCard = ({ concerts }) => {
-    // console.log(concerts)
+    
+
+    if (concerts){
+        console.log(Array.isArray(concerts))
+        concerts = concerts.sort(sortByDate)
+    }
 
     const { addToUserTickets } = useOutletContext()
 
     function addConcert(e) {
-        const [concert] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
-        // console.log(e.target.dataset.concert_id)
-        // console.log(concert)
+        const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
         addToUserTickets(concert)
         handleShowModal()
     }
@@ -30,9 +34,8 @@ const VenueConcertsCard = ({ concerts }) => {
                 <Card.Header>Upcoming Events</Card.Header>
                 <ListGroup variant="flush">
                     {concerts ? concerts.map((concert, i) => {
-                        // console.log(concert.id)
                         return (
-                            <ListGroup.Item key={i} className="lead">
+                            <ListGroup.Item key={i} className="lead py-4">
 
                                 <b>{formatDateString(concert.date)}</b>
 

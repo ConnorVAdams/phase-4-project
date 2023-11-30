@@ -34,7 +34,7 @@ const Venues = () => {
                 </Row>
                 <Row>
                     {filteredVenues.map(({ id, name, location }) => (
-                        <Col md={4} key={id}>
+                        <Col md={3} key={id}>
                             <VenueCard id={id} name={name} location={location} />
                         </Col>
                     ))}

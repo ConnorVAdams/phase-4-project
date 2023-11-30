@@ -29,7 +29,7 @@ const ConcertCard = ({event}) => {
             <Card.Img src="./assets/concert_placeholder.png" className="img-fluid"/>
             <ListGroup>
                 <ListGroup.Item>
-                    <Card.Title className="display-4">{artistName}</Card.Title>
+                    <Card.Title className="display-4 d-flex flex-column justify-content-center" style={{height: "9rem"}}>{artistName}</Card.Title>
                 </ListGroup.Item>
                 <ListGroup.Item>
                     <Card.Text className="lead">{event.date}</Card.Text>
