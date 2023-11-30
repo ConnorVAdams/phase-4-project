@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request
 from flask_restful import Resource
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -87,8 +88,7 @@ class ConcertsForArtist(Resource):
 
     def get(self, id):
         if artist := db.session.get(Artist, id):
-            return [concert.to_dict(
-            ) for concert in artist.concerts], 200
+            return [concert.to_dict() for concert in artist.concerts], 200
         return {'error': f'No artist with ID {id} found.'}, 404
 
 api.add_resource(ConcertsForArtist, '/artists/<int:id>/concerts')
@@ -164,7 +164,9 @@ class ConcertsForVenue(Resource):
     def get(self, id):
         if venue := db.session.get(Venue, id):
             return [concert.to_dict(
-               
+                rules=(
+                    '-venue',
+                )
             ) for concert in venue.concerts], 200
         return {'error': f'No venue with ID {id} found.'}, 404
 
@@ -173,7 +175,6 @@ api.add_resource(ConcertsForVenue, '/venues/<int:id>/concerts')
 # **************
 # CONCERT ROUTES
 # **************
-
 class Concerts(Resource):
 
     def get(self):
@@ -187,6 +188,7 @@ class Concerts(Resource):
     def post(self):
         try:
             data = request.get_json()
+            data['date_time'] = datetime.strptime(data['date_time'], '%Y-%m-%d %H:%M')
             new_concert = Concert(**data)
             db.session.add(new_concert)
             db.session.commit()

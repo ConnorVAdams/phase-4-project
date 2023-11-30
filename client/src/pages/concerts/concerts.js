@@ -6,7 +6,7 @@ import SearchBar from '../../components/searchBar'
 import { useState } from 'react'
 import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron"
 
-const URL = "http://127.0.0.1:5000/api/v1/concerts"
+const URL = "http://127.0.0.1:5555/api/v1/concerts"
 
 const Concerts = () => {
 
