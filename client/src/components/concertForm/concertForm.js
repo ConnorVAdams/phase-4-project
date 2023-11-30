@@ -57,7 +57,7 @@ const ConcertForm = () => {
                     tix_low: 0,
                     sold_out: 0,
                     artist_name: '',
-                    artist_genre: 'Other',
+                    artist_genre: '',
                     artist_description: ''
                 }}
                 validationSchema={concertFormSchema(newArtist)}
@@ -82,6 +82,7 @@ const ConcertForm = () => {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'Request-Source': 'Frontend'
                                 },
                                 body: JSON.stringify(values),
                             })
@@ -218,12 +219,12 @@ const ConcertForm = () => {
                                             </div>
 
                                             <div className='form-field my-3'>
-                                                <label htmlFor='genre'>Genre</label><br/>
+                                                <label htmlFor='artist_genre'>Genre</label><br/>
                                                 <Field
                                                     as='select'
-                                                    name='genre'
-                                                    id='genre'
-                                                    className={`form-control ${errors.genre && touched.genre ? 'input-error' : null}`}
+                                                    name='artist_genre'
+                                                    id='artist_genre'
+                                                    className={`form-control ${errors.artist_genre && touched.artist_genre ? 'input-error' : null}`}
                                                 >
                                                     <option value=''>Select Genre</option>
                                                     {Array.from(new Set(artists.map(artist => artist.genre))).map((genre, index) => (
@@ -233,7 +234,7 @@ const ConcertForm = () => {
                                                     ))}
                                                     <option value='Other'>Other</option>
                                                 </Field>
-                                                <ErrorMessage name='genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
+                                                <ErrorMessage name='artist_genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
                                             </div>
 
                                             <div className='form-field my-3'>

@@ -6,6 +6,7 @@
 from flask import request
 from flask_restful import Resource
 from datetime import datetime
+import requests
 
 # Local imports
 from config import app, db, api
@@ -34,16 +35,19 @@ class Artists(Resource):
         return artists, 200
     
     def post(self):
-        try:
-            data = request.get_json()
-            new_artist = Artist(**data)
-            db.session.add(new_artist)
-            db.session.commit()
-            return new_artist.to_dict(), 201
-        except Exception as e:
-            db.session.rollback()
-            return {'error': str(e)}, 400
-    
+        if request.headers.get('Request-Source') == 'Frontend':
+            try:
+                data = request.get_json()
+                new_artist = Artist(**data)
+                db.session.add(new_artist)
+                db.session.commit()
+                return new_artist.to_dict(), 201
+            except Exception as e:
+                db.session.rollback()
+                return {'error': str(e)}, 400
+        
+        elif request.headers.get('Request-Source') == 'ConcertAndArtist':
+            pass
 api.add_resource(Artists, '/artists')
 
 class ArtistByID(Resource):
@@ -201,13 +205,32 @@ api.add_resource(Concerts, '/concerts')
 
 class ConcertAndArtist(Resource):
     def post(self):
-        # Get json data
         try:
             data = request.get_json()
-            print(data)
-        # Hold that data in this scope
 
-        # Attempt to post artist to db
+            concert_data = {
+                'date_time': datetime.strptime(data['date_time'], '%Y-%m-%d %H:%M'),
+                'price': data['price'],
+                'artist_id': data['artist_id'],
+                'venue_id': data['venue_id'],
+                'tix_low': data['tix_low'],
+                'sold_out': data['sold_out'],
+            }
+
+            artist_data = {
+                'name': data['artist_name'],
+                'genre': data['artist_genre'],
+                'description': data['artist_description']
+            }
+            
+            print(concert_data, artist_data)
+
+            artist_response = requests.post('http://127.0.0.1:5555/artists', json=artist_data, headers={'Request-Source': 'ConcertAndArtist'})
+            artist_response_data = artist_response.get_json()
+
+            print(artist_response_data)
+
+            # new_artist_id = artist_response_data.get('id')
 
         # Return new artist id from db
 
