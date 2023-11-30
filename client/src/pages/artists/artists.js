@@ -4,6 +4,7 @@ import { useFetch } from '../../hooks/customHooks'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useState } from 'react'
 import SearchBar from "../../components/searchBar/searchBar"
+import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron"
 
 
 const URL = 'http://127.0.0.1:5555/api/v1/artists'
@@ -11,19 +12,16 @@ const URL = 'http://127.0.0.1:5555/api/v1/artists'
 const Artists = () => {
 
     const { data } = useFetch(URL)
-    console.log(data)
 
     let [ searchName, setSearchByName ] = useState('')
     let [ searchGenre, setSearchGenre] = useState('')
 
     const changeSearchByName = (e) => {
         setSearchByName(e.target.value)
-        console.log('this is the name filter', searchName)
     }
 
     const changeSearchByGenre = (e) => {
         setSearchGenre(e.target.value)
-        console.log('This is the genre filter' , searchGenre)
     }
 
     const filteredArists = data
@@ -36,7 +34,7 @@ const Artists = () => {
 
     return (
         <>
-            <Header text="All Artists"/>
+            <ModelJumbotron text="All Artists" image="./assets/jumbotron-concert-photo.jpg"/>
             <Container>
                 <Row>
                     <Col md={6}>
@@ -49,7 +47,7 @@ const Artists = () => {
                 <Row>
                     {filteredArists.map(({id, name, genre}) => {
                         return(
-                            <Col key={id} md={4}>
+                            <Col key={id} md={3}>
                                 <ArtistCard id={id} name={name} genre={genre} />
                             </Col>
                         )

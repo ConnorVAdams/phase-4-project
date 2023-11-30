@@ -4,7 +4,7 @@ import './jumbotron.css'
 
 const Jumbotron = () => {
     return (
-        <div className="jumbotron jumbotron-fluid text-center py-5 bg-light text-white text-shadow d-flex flex-column justify-content-center">
+        <div id="homeJumbo" className="jumbotron jumbotron-fluid text-center py-5 bg-light text-white text-shadow d-flex flex-column justify-content-center">
             <div className="container">
                 <h1 className="display-1">StageFinder</h1>
                 <p className="display-6 my-4">Find the best events happening in your area.</p>

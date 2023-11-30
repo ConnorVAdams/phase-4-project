@@ -6,7 +6,6 @@
 from flask import request
 from flask_restful import Resource
 from datetime import datetime
-import requests
 
 # Local imports
 from config import app, db, api
@@ -35,16 +34,16 @@ class Artists(Resource):
         return artists, 200
     
     def post(self):
-            try:
-                data = request.get_json()
-                new_artist = Artist(**data)
-                db.session.add(new_artist)
-                db.session.commit()
-                return new_artist.to_dict(), 201
-            except Exception as e:
-                db.session.rollback()
-                return {'error': str(e)}, 400
-        
+        try:
+            data = request.get_json()
+            new_artist = Artist(**data)
+            db.session.add(new_artist)
+            db.session.commit()
+            return new_artist.to_dict(), 201
+        except Exception as e:
+            db.session.rollback()
+            return {'error': str(e)}, 400
+    
 api.add_resource(Artists, '/artists')
 
 class ArtistByID(Resource):
@@ -242,14 +241,12 @@ class ConcertAndArtist(Resource):
             return {'error': str(e)}, 400
 api.add_resource(ConcertAndArtist, '/concert_and_artist')
 
+
 class ConcertByID(Resource):
 
     def get(self, id):
         if concert := db.session.get(Concert, id):
             return concert.to_dict(
-                rules=(
-
-                )
             ), 200
         return {'error': f'No concert with ID {id} found.'}, 404
     
