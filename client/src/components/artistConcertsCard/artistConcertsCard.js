@@ -27,7 +27,7 @@ const ArtistConcertsCard = ({ concerts }) => {
 
     return (
         <>
-        <Card>
+        <Card className="text-center">
             <Card.Header>Tour Schedule</Card.Header>
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
@@ -36,10 +36,7 @@ const ArtistConcertsCard = ({ concerts }) => {
                         <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
                             <p>
-                                <i className="fa fa-map-marker-alt" style={{ color: "orangered" }}></i>
-                                {' '}{concert.venue.location}
-                                {' '}| 
-                                {' '}{concert.venue.name}
+                                {concert.venue.location} | {concert.venue.name}
                             </p>
                             {concert.tix_low ? <LowTicketWarning /> : ''}
                             {concert.sold_out ? 
@@ -48,13 +45,12 @@ const ArtistConcertsCard = ({ concerts }) => {
                             <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
                         }
                         </ListGroup.Item>
-                        <BuyTicketModal show={showModal} handleClose={handleCloseModal} concert={concert ? concert : null} />
                         </>
                     )
                 }) : ""}
             </ListGroup>
         </Card>
-        
+        <BuyTicketModal show={showModal} handleClose={handleCloseModal} />
         </>
     );
 }

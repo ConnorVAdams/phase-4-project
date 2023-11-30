@@ -11,18 +11,18 @@ const ArtistDetailsView = ({ artist }) => {
     console.log(concerts)
 
     return (
-        <Container className="text-center my-5">
+        <Container className="my-5">
             <Row className="my-5">
                 <Col>
                     <img src="../assets/artist_detail_placeholder.png" alt="artist detail placeholder" className='img-fluid rounded' />
                 </Col>
                 <Col>
-                    <h1 className="display-1">{artist.name}</h1>
+                    <h1 className="display-1 text-center">{artist.name}</h1>
                     <p className="lead mb-5">{artist.description}</p>
                     <ArtistConcertsCard concerts={concerts}/>
                 </Col>
             </Row>
-            <Row>
+            <Row className="text-center">
                 <Col>
                     <Link to="/artists">
                         <Button variant="secondary" size="lg">Back To All Artists</Button>
