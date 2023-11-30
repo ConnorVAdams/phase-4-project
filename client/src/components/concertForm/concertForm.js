@@ -88,7 +88,7 @@ const ConcertForm = () => {
         }
         >
             {formik => {
-                const { errors, touched, setFieldValue } = formik
+                const { errors, touched, setFieldValue, setFieldError } = formik
                 return (
                     <div className='concert-form'>
                         <Form>
@@ -164,26 +164,43 @@ const ConcertForm = () => {
                             <div>
                                 {newArtist && (
                                     <>
-                                        <div class='form-field'>
+                                        <div className='form-field'>
                                             <label htmlFor='artist_name'>Name</label><br/>
                                             <Field
                                                 type='text'
                                                 name='artist_name'
                                                 id='artist_name'
                                                 className={errors.artist_name && touched.artist_name ? 'input-error' : null}
+                                                onChange={(e) => {
+                                                    const artistNames = artists.map(artist => artist.name.toUpperCase())
+                                                    const enteredName = e.target.value.toUpperCase()
+                                                    if (artistNames.includes(enteredName)) {
+                                                        console.log('That artist already exists. Please use the dropdown above.')
+                                                        setFieldError('artist_name', 'That artist already exists. Please use the dropdown above.')
+                                                    } else {
+                                                        setFieldValue('artist_name', e.target.value)
+                                                    }
+                                                }}
                                             />
                                             <ErrorMessage name='artist_name' component='span' className='error'/>
                                         </div>
 
-                                        <div class='form-field'>
-                                        <label htmlFor='artist_genre'>Genre</label><br/>
-                                        <Field
-                                            type='text'
-                                            name='artist_genre'
-                                            id='artist_genre'
-                                            className={errors.artist_genre && touched.artist_genre ? 'input-error' : null}
-                                        />
-                                        <ErrorMessage name='artist_genre' component='span' className='error'/>
+                                        <div className='form-field'>
+                                            <label htmlFor='genre'>Genre</label><br/>
+                                            <Field
+                                                as='select'
+                                                name='genre'
+                                                id='genre'
+                                                className={errors.venue && touched.venue ? 'input-error' : null}
+                                            >
+                                                <option value=''>Select Genre</option>
+                                                {Array.from(new Set(artists.map(artist => artist.genre))).map((genre, index) => (
+                                                    <option key={index} value={genre}>
+                                                        {genre}
+                                                    </option>
+                                                ))}
+                                            </Field>
+                                            <ErrorMessage name='genre' component='span' className='error'/>
                                         </div>
 
                                         <div class='form-field'>
@@ -196,6 +213,12 @@ const ConcertForm = () => {
                                         />
                                         <ErrorMessage name='artist_description' component='span' className='error'/>
                                         </div>
+
+                                        <button 
+                                            type='submit' 
+                                            name='cancel_new_artist_btn'>
+                                            Add Artist
+                                        </button>
 
                                         <button 
                                             type='button' 
