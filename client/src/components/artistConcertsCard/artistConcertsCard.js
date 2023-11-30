@@ -39,11 +39,13 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 {concert.venue.location} | {concert.venue.name}
                             </p>
                             {concert.tix_low ? <LowTicketWarning /> : ''}
-                            {concert.sold_out ? 
-                            <Button variant="dark" disabled >Sold Out</Button>
-                            :
-                            <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
-                        }
+                            <div className="d-grid gap-2">
+                                {concert.sold_out ? 
+                                <Button variant="dark" disabled >Sold Out</Button>
+                                :
+                                <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
+                                }
+                            </div>
                         </ListGroup.Item>
                         </>
                     )

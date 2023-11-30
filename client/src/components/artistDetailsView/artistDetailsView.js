@@ -22,13 +22,6 @@ const ArtistDetailsView = ({ artist }) => {
                     <ArtistConcertsCard concerts={concerts}/>
                 </Col>
             </Row>
-            <Row className="text-center">
-                <Col>
-                    <Link to="/artists">
-                        <Button variant="secondary" size="lg">Back To All Artists</Button>
-                    </Link>
-                </Col>
-            </Row>
         </Container>
     )
 }
