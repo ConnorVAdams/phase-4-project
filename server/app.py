@@ -206,7 +206,7 @@ class ConcertAndArtist(Resource):
             data = request.get_json()
 
             concert_data = {
-                'date_time': datetime.strptime(data['date_time'], '%Y-%m-%d %H:%M'),
+                'date_time': data['date_time'],
                 'price': data['price'],
                 'artist_id': data['artist_id'],
                 'venue_id': data['venue_id'],
@@ -219,16 +219,23 @@ class ConcertAndArtist(Resource):
                 'genre': data['artist_genre'],
                 'description': data['artist_description']
             }
+
+            try:
+                artist_response = requests.post('http://127.0.0.1:5555/api/v1/artists', json=artist_data)
+                artist_response_data = artist_response.json()
+
+                concert_data['artist_id'] = artist_response_data['id']
+
+            except Exception as e:
+                db.session.rollback()
+                return {'error': str(e)}, 400
             
-            print(concert_data, artist_data)
+            try:
+                concert_response = requests.post('http://127.0.0.1:5555/api/v1/concerts', json=concert_data)
 
-            artist_response = requests.post('http://127.0.0.1:5555/api/v1/artists', json=artist_data)
-            artist_response_data = artist_response.get_json()
-
-            print(artist_response_data)
-
-            # new_artist_id = artist_response_data.get('id')
-
+            except Exception as e:
+                db.session.rollback()
+                return {'error': str(e)}, 400
         # Return new artist id from db
 
         # On success, send values and new artist id to post method in /concerts route
