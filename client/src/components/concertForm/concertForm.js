@@ -82,7 +82,6 @@ const ConcertForm = () => {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Request-Source': 'Frontend'
                                 },
                                 body: JSON.stringify(values),
                             })

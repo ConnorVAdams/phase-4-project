@@ -35,7 +35,6 @@ class Artists(Resource):
         return artists, 200
     
     def post(self):
-        if request.headers.get('Request-Source') == 'Frontend':
             try:
                 data = request.get_json()
                 new_artist = Artist(**data)
@@ -46,8 +45,6 @@ class Artists(Resource):
                 db.session.rollback()
                 return {'error': str(e)}, 400
         
-        elif request.headers.get('Request-Source') == 'ConcertAndArtist':
-            pass
 api.add_resource(Artists, '/artists')
 
 class ArtistByID(Resource):
@@ -225,7 +222,7 @@ class ConcertAndArtist(Resource):
             
             print(concert_data, artist_data)
 
-            artist_response = requests.post('http://127.0.0.1:5555/artists', json=artist_data, headers={'Request-Source': 'ConcertAndArtist'})
+            artist_response = requests.post('http://127.0.0.1:5555/api/v1/artists', json=artist_data)
             artist_response_data = artist_response.get_json()
 
             print(artist_response_data)
