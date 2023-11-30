@@ -1,5 +1,6 @@
 import { Navbar as Navigation, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
+import ScrollIndicator from '../scrollIndicator/scrollIndicator';
 
 const Navbar = () => {
   return (
@@ -19,6 +20,7 @@ const Navbar = () => {
           </Nav>
         </Navigation.Collapse>
       </Container>
+      <ScrollIndicator/>
     </Navigation>
   );
 };
