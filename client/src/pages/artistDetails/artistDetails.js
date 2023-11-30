@@ -11,7 +11,13 @@ const ArtistDetails = () => {
     const { id }  = useParams()
     const { data } = useFetch(`${URL}/${id}`)
 
-    console.log(data)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (data['error']){
+            navigate('/error')
+        }
+    })
 
     return <ArtistDetailsView artist={data} />
 }

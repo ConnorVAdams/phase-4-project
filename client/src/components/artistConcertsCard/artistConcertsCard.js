@@ -32,7 +32,6 @@ const ArtistConcertsCard = ({ concerts }) => {
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
                     return (
-                        <>
                         <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
                             <p>
@@ -47,7 +46,6 @@ const ArtistConcertsCard = ({ concerts }) => {
                                 }
                             </div>
                         </ListGroup.Item>
-                        </>
                     )
                 }) : ""}
             </ListGroup>
