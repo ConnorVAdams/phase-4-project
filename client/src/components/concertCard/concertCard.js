@@ -2,6 +2,7 @@ import { Card, Button, ListGroup } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
 import { useState } from 'react'
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
+import triggerConfetti from '../../util/confettiEffect';
 
 const ConcertCard = ({event}) => {
 
@@ -18,9 +19,9 @@ const ConcertCard = ({event}) => {
     const venueLocation = event.venue.location
     
     function addConcert(){
-        console.log(event)
         addToUserTickets(event)
         handleShowModal()
+        triggerConfetti()
     }
     
     return (

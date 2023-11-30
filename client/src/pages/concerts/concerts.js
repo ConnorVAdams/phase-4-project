@@ -15,8 +15,6 @@ const Concerts = () => {
 
     const { data } = useFetch(URL)
 
-    console.log(data)
-
     const changeSearchByCity = (e) => {
         setCity(e.target.value)
     }

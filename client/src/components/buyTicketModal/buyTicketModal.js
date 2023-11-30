@@ -2,7 +2,6 @@ import { Modal, Button } from 'react-bootstrap';
 import { v4 as uuid } from "uuid";
 import { Link } from 'react-router-dom'
 
-
 const BuyTicketModal = ({ show, handleClose }) => {
 
     return (

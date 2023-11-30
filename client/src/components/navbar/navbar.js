@@ -10,8 +10,8 @@ const Navbar = () => {
             <Navigation.Brand>StageFinder</Navigation.Brand>
         </NavLink>
         <Navigation.Toggle />
-        <Navigation.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+        <Navigation.Collapse>
+          <Nav className="justify-content-end">
             <NavLink className="nav-link" to="/myTickets">My Tickets</NavLink>
             <NavLink className="nav-link" to="/artists">Artists</NavLink>
             <NavLink className="nav-link" to="/concerts">Concerts</NavLink>

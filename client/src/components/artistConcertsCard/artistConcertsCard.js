@@ -5,7 +5,7 @@ import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 import { useState } from 'react'
 import sortByDate from '../../util/sortByDate'
-
+import triggerConfetti from '../../util/confettiEffect';
 
 const ArtistConcertsCard = ({ concerts }) => {
 
@@ -23,6 +23,7 @@ const ArtistConcertsCard = ({ concerts }) => {
         console.log(concert)
         addToUserTickets(concert)
         handleShowModal()
+        triggerConfetti()
     }
 
     return (

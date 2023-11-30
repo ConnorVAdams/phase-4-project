@@ -5,12 +5,12 @@ import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
 import { useState } from 'react'
 import BuyTicketModal from '../buyTicketModal/buyTicketModal';
 import sortByDate from '../../util/sortByDate';
+import triggerConfetti from '../../util/confettiEffect'
 
 const VenueConcertsCard = ({ concerts }) => {
     
 
     if (concerts){
-        console.log(Array.isArray(concerts))
         concerts = concerts.sort(sortByDate)
     }
 
@@ -20,10 +20,10 @@ const VenueConcertsCard = ({ concerts }) => {
         const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
         addToUserTickets(concert)
         handleShowModal()
+        triggerConfetti()
     }
 
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
     const handleShowModal = () => setShowModal(true); // Function to show the modal
     const handleCloseModal = () => setShowModal(false); // Function to hide the modal
 
@@ -42,13 +42,14 @@ const VenueConcertsCard = ({ concerts }) => {
                                 <p className="display-6">{concert.artist.name}</p>
 
                                 <p>Doors: {concert.time}</p>
+
                                 {concert.tix_low ? <LowTicketWarning /> : ''}
+
                                 {concert.sold_out ?
                                     <Button variant="dark" disabled >Sold Out</Button>
                                     :
                                     <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
                                 }
-
                             </ListGroup.Item>
                         )
                     }) : ""}
