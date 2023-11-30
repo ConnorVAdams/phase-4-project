@@ -60,7 +60,7 @@ const ConcertForm = () => {
                     artist_genre: 'Other',
                     artist_description: ''
                 }}
-                validationSchema={concertFormSchema}
+                validationSchema={concertFormSchema(newArtist)}
                 onSubmit={async (values) => {
                     values.date_time = `${values.date} ${values.time}`
                     values.price = Number(values.price)
@@ -154,6 +154,7 @@ const ConcertForm = () => {
                                     <ErrorMessage name='price' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
+
                                 <div className='form-field'>
                                     <label htmlFor='artist_id'>Choose Existing Artist</label><br/>
                                     <Field
@@ -178,18 +179,18 @@ const ConcertForm = () => {
                                     <ErrorMessage name='artist_id' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                
                                 </div>
 
-                                    {!newArtist && (
-                                        <>
-                                            <label htmlFor='add_new_artist_btn'>Or </label>
-                                            <Button 
-                                                type='button' 
-                                                name='add_new_artist_btn'
-                                                className='mx-2'
-                                                onClick={() => setNewArtist(true)}>
-                                                Add New Artist
-                                            </Button>
-                                        </>
-                                    )}
+                                {!newArtist && (
+                                    <>
+                                        <label htmlFor='add_new_artist_btn'>Or </label>
+                                        <Button 
+                                            type='button' 
+                                            name='add_new_artist_btn'
+                                            className='mx-2'
+                                            onClick={() => setNewArtist(true)}>
+                                            Add New Artist
+                                        </Button>
+                                    </>
+                                )}
 
                                 <div className={newArtist ? `rounded border border-primary border-2 p-3`: null}>
                                     {newArtist && (

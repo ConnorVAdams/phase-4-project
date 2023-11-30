@@ -117,10 +117,10 @@ class Artist(db.Model, SerializerMixin):
             raise TypeError(
                 'Description must be a string.'
             )
-        elif not len(new_description) in range(1, 201):
-            raise ValueError(
-                'Genre must be between 1 and 200 characters.'
-            )
+        # elif not len(new_description) in range(1, 201):
+        #     raise ValueError(
+        #         'Description must be between 1 and 200 characters.'
+        #     )
         return new_description
 
     def __repr__(self):
