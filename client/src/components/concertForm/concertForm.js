@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button, } from 'react-bootstrap'
 // import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
@@ -106,9 +106,9 @@ const ConcertForm = () => {
                                         type='date'
                                         name='date'
                                         id='date'
-                                        className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                        className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
                                     />
-                                    <ErrorMessage name='date' component='span' className='error'/>
+                                    <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
                                 
                                 <div className='form-field'>
@@ -117,9 +117,9 @@ const ConcertForm = () => {
                                         type='time'
                                         name='time'
                                         id='time'
-                                        className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                        className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
                                     />
-                                    <ErrorMessage name='time' component='span' className='error'/>
+                                    <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
                                 <div className='form-field'>
@@ -128,9 +128,9 @@ const ConcertForm = () => {
                                         type='price'
                                         name='price'
                                         id='price'
-                                        className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                        className={`form-control ${errors.price && touched.price ? 'input-error' : null}`}
                                     />
-                                    <ErrorMessage name='price' component='span' className='error'/>
+                                    <ErrorMessage name='price' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
                                 <div className='form-field'>
@@ -139,7 +139,7 @@ const ConcertForm = () => {
                                         as='select'
                                         name='artist_id'
                                         id='artist_id'
-                                        className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                        className={`form-control ${errors.artist_id && touched.artist_id ? 'input-error' : null}`}
                                         onChange={(e) => {
                                             setFieldValue('artist_id', e.target.value)
                                             setNewArtist(false)
@@ -154,7 +154,7 @@ const ConcertForm = () => {
                                             </option>
                                         ))}
                                     </Field><br/>
-                                    <ErrorMessage name='artist_id' component='span' className='error'/>
+                                    <ErrorMessage name='artist_id' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                
                                 </div>
 
                                     {!newArtist && (
@@ -178,7 +178,7 @@ const ConcertForm = () => {
                                                     type='text'
                                                     name='artist_name'
                                                     id='artist_name'
-                                                    className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                                    className={`form-control ${errors.artist_name && touched.artist_name ? 'input-error' : null}`}
                                                     onChange={(e) => {
                                                         const artistNames = artists.map(artist => artist.name.toUpperCase())
                                                         const enteredName = e.target.value.toUpperCase()
@@ -190,7 +190,7 @@ const ConcertForm = () => {
                                                         }
                                                     }}
                                                 />
-                                                <ErrorMessage name='artist_name' component='span' className='error'/>
+                                                <ErrorMessage name='artist_name' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                             </div>
 
                                             <div className='form-field'>
@@ -199,7 +199,7 @@ const ConcertForm = () => {
                                                     as='select'
                                                     name='genre'
                                                     id='genre'
-                                                    className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                                    className={`form-control ${errors.genre && touched.genre ? 'input-error' : null}`}
                                                 >
                                                     <option value=''>Select Genre</option>
                                                     {Array.from(new Set(artists.map(artist => artist.genre))).map((genre, index) => (
@@ -209,31 +209,19 @@ const ConcertForm = () => {
                                                     ))}
                                                     <option value='Other'>Other</option>
                                                 </Field>
-                                                <ErrorMessage name='genre' component='span' className='error'/>
+                                                <ErrorMessage name='genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
                                             </div>
 
                                             <div className='form-field'>
-                                            <label htmlFor='artist_description'>Description</label><br/>
-                                            <Field
-                                                type='text'
-                                                name='artist_description'
-                                                id='artist_description'
-                                                className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
-                                            />
-                                            <ErrorMessage name='artist_description' component='span' className='error'/>
+                                                <label htmlFor='artist_description'>Description</label><br/>
+                                                <Field
+                                                    type='text'
+                                                    name='artist_description'
+                                                    id='artist_description'
+                                                    className={`form-control ${errors.artist_description && touched.artist_description ? 'input-error' : null}`}
+                                                />
+                                                <ErrorMessage name='artist_description' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                             </div>
-
-                                            <Button 
-                                                type='submit' 
-                                                name='add_new_artist_btn'
-                                                onSubmit={() => {
-                                                    // Attempt to post new artist to database.
-                                                    // On success, re-render component with current value's held in Formik's internal state
-                                                    // Display new artist name in drop down and change its value to that new artist 
-                                                }}
-                                                >
-                                                Add Artist
-                                            </Button>
 
                                             <Button 
                                                 type='button' 
@@ -252,7 +240,7 @@ const ConcertForm = () => {
                                         as='select'
                                         name='venue_id'
                                         id='venue_id'
-                                        className={`form-control ${errors.venue && touched.venue ? 'input-error' : null}`}
+                                        className={`form-control ${errors.venue_id && touched.venue_id ? 'input-error' : null}`}
 
                                     >
                                         <option value=''>Select Venue</option>
@@ -262,7 +250,7 @@ const ConcertForm = () => {
                                             </option>
                                         ))}
                                     </Field>
-                                    <ErrorMessage name='venue_id' component='span' className='error'/>
+                                    <ErrorMessage name='venue_id' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
                                 <Button type='submit'>Submit</Button>
