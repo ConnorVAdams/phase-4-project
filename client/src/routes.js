@@ -7,11 +7,13 @@ import MyTickets from './pages/myTickets/myTickets'
 import AddConcert from './pages/addConcert'
 import ArtistDetails from './pages/artistDetails/artistDetails'
 import VenueDetails from './pages/venueDetails/venueDetails'
+import ErrorComponent from './pages/errorComponent/errorComponent'
 
 const routes = [
     {
         path: '/',
         element: <App />,
+        errorElement: <ErrorComponent />,
         children: [
             {
                 path: '/',
@@ -44,6 +46,10 @@ const routes = [
             {
                 path: '/addConcert',
                 element: <AddConcert />
+            },
+            {
+                path: '/error',
+                element: <ErrorComponent />
             },
         ]
     }

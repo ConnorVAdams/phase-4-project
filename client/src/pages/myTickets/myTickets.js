@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
-import Header from "../../components/header/header"
 import Ticket from "../../components/ticket";
 import { Container, Row, Col } from 'react-bootstrap'
+import ModelJumbotron from '../../components/modelJumbotron'
 
 const MyTickets = () => {
 
@@ -9,7 +9,7 @@ const MyTickets = () => {
 
     return (
         <>
-            <Header text="My Tickets" />
+            <ModelJumbotron image="./assets/jumbotron-concert-photo.jpg" text="My Tickets" />
             <Container className="my-5">
                 <Row>
                     <Col>

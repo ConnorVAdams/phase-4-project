@@ -10,9 +10,6 @@ const IntroBlurb = () => {
           <p className="lead">
             Step into the world of endless musical possibilities with our platform, where fans connect directly with artists and secure tickets to the most anticipated concerts. Experience the thrill of live performances and become part of a community that celebrates the power of music.
           </p>
-            <Link to="/artists">
-              <Button  size="lg" variant="secondary"> Find Artists</Button>
-            </Link>
           <hr />
           <h2 className="display-6">Your Gateway to Unforgettable Concert Experiences</h2>
           <p className="lead">
@@ -20,7 +17,7 @@ const IntroBlurb = () => {
           </p>
         </Col>
         <Col md={6}>
-          <img className="img-fluid rounded" src="./assets/dj_view.jpg" alt="Flatiron school logo"/>
+          <img className="img-fluid rounded" src="./assets/dj_view.jpg"/>
         </Col>
       </Row>
     </Container>

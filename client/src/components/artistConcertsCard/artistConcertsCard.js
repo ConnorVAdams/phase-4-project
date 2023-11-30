@@ -2,43 +2,57 @@ import { Card, ListGroup, Button } from 'react-bootstrap';
 import formatDateString from '../../util/formatDate';
 import { useOutletContext } from 'react-router-dom';
 import LowTicketWarning from '../lowTicketWarning/lowTicketWarning';
+import BuyTicketModal from '../buyTicketModal/buyTicketModal';
+import { useState } from 'react'
+import sortByDate from '../../util/sortByDate'
+import triggerConfetti from '../../util/confettiEffect';
 
 const ArtistConcertsCard = ({ concerts }) => {
 
+    concerts = concerts.sort(sortByDate)
+
     const { addToUserTickets } = useOutletContext()
+
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
+
+    const handleShowModal = () => setShowModal(true); // Function to show the modal
+    const handleCloseModal = () => setShowModal(false); // Function to hide the modal
 
     const addConcert = (e) => {
         const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
+        console.log(concert)
         addToUserTickets(concert)
-        alert('concert has been added')
+        handleShowModal()
+        triggerConfetti()
     }
 
     return (
-        <Card>
+        <>
+        <Card className="text-center">
             <Card.Header>Tour Schedule</Card.Header>
             <ListGroup variant="flush">
                 {concerts ? concerts.map((concert, i) => {
-                    console.log(concert)
                     return (
                         <ListGroup.Item key={i} className="lead">
                             <b>{formatDateString(concert.date)}</b>
                             <p>
-                                <i className="fa fa-map-marker-alt" style={{ color: "orangered" }}></i>
-                                {' '}{concert.venue.location}
-                                {' '}| 
-                                {' '}{concert.venue.name}
+                                {concert.venue.location} | {concert.venue.name}
                             </p>
                             {concert.tix_low ? <LowTicketWarning /> : ''}
-                            {concert.sold_out ? 
-                            <Button variant="dark" disabled >Sold Out</Button>
-                            :
-                            <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
-                            }
+                            <div className="d-grid gap-2">
+                                {concert.sold_out ? 
+                                <Button variant="dark" disabled >Sold Out</Button>
+                                :
+                                <Button onClick={addConcert} data-concert_id={concert.id} variant="primary">Buy Tickets</Button>
+                                }
+                            </div>
                         </ListGroup.Item>
                     )
                 }) : ""}
             </ListGroup>
         </Card>
+        <BuyTicketModal show={showModal} handleClose={handleCloseModal} />
+        </>
     );
 }
 
