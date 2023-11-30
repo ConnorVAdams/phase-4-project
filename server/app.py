@@ -236,9 +236,7 @@ class ConcertAndArtist(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 400
-        # Return new artist id from db
-
-        # On success, send values and new artist id to post method in /concerts route
+            
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
