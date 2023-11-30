@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <Navigation bg="dark" variant="dark" expand="lg">
+    <Navigation bg="dark" variant="dark" expand="lg" sticky="top">
       <Container to="/">
         <NavLink className="nav-link">
             <Navigation.Brand>StageFinder</Navigation.Brand>
