@@ -27,8 +27,7 @@ const concertFormSchema = Yup.object().shape({
 
     artist_name: Yup
     .string(30)
-    .required('Name is required.')
-    ,
+    .required('Name is required.'),
 
     artist_genre: Yup
     .string(20)
