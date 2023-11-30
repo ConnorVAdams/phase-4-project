@@ -88,11 +88,7 @@ class ConcertsForArtist(Resource):
 
     def get(self, id):
         if artist := db.session.get(Artist, id):
-            return [concert.to_dict(
-                rules=(
-                    '-artist',
-                )
-            ) for concert in artist.concerts], 200
+            return [concert.to_dict() for concert in artist.concerts], 200
         return {'error': f'No artist with ID {id} found.'}, 404
 
 api.add_resource(ConcertsForArtist, '/artists/<int:id>/concerts')

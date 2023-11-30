@@ -18,7 +18,7 @@ class Venue(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    concerts = db.relationship('Concert', back_populates='venue', cascade='all, delete-orphan')
+    concerts = db.relationship('Concert', order_by='Concert.date_time', back_populates='venue', cascade='all, delete-orphan')
 
     artists = association_proxy('concerts', 'venue')
 
@@ -73,7 +73,7 @@ class Artist(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    concerts = db.relationship('Concert', back_populates='artist', cascade='all, delete-orphan')
+    concerts = db.relationship('Concert', order_by='Concert.date_time', back_populates='artist', cascade='all, delete-orphan')
 
     venues = association_proxy('concerts', 'artist')
 
