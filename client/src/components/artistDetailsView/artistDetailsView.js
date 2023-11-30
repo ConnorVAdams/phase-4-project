@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ArtistConcertsCard from '../artistConcertsCard'
 import { useFetch } from '../../hooks/customHooks'
 
-const URL = 'http://127.0.0.1:5000/api/v1/artists'
+const URL = 'http://127.0.0.1:5555/api/v1/artists'
 
 const ArtistDetailsView = ({ artist }) => {
 
