@@ -136,6 +136,8 @@ const ConcertForm = () => {
                                         setFieldValue('artist_id', e.target.value)
                                         setNewArtist(false)
                                     }}
+                                    disabled={newArtist}
+                                    value={newArtist ? '' : formik.values.artist_id}
                                 >
                                     <option value=''>Select Artist</option>
                                     {artists.map(artist => (
@@ -145,6 +147,7 @@ const ConcertForm = () => {
                                     ))}
                                 </Field><br/>
                                 <ErrorMessage name='artist_id' component='span' className='error'/>
+                            </div>
 
                                 {!newArtist && (
                                     <>
@@ -158,10 +161,11 @@ const ConcertForm = () => {
                                     </>
                                 )}
 
+                            <div>
                                 {newArtist && (
                                     <>
                                         <div class='form-field'>
-                                            <label htmlFor='artist_name'>Name</label>
+                                            <label htmlFor='artist_name'>Name</label><br/>
                                             <Field
                                                 type='text'
                                                 name='artist_name'
@@ -172,7 +176,7 @@ const ConcertForm = () => {
                                         </div>
 
                                         <div class='form-field'>
-                                        <label htmlFor='artist_genre'>Genre</label>
+                                        <label htmlFor='artist_genre'>Genre</label><br/>
                                         <Field
                                             type='text'
                                             name='artist_genre'
@@ -181,6 +185,24 @@ const ConcertForm = () => {
                                         />
                                         <ErrorMessage name='artist_genre' component='span' className='error'/>
                                         </div>
+
+                                        <div class='form-field'>
+                                        <label htmlFor='artist_description'>Description</label><br/>
+                                        <Field
+                                            type='text'
+                                            name='artist_description'
+                                            id='artist_description'
+                                            className={errors.artist_description && touched.artist_description ? 'input-error' : null}
+                                        />
+                                        <ErrorMessage name='artist_description' component='span' className='error'/>
+                                        </div>
+
+                                        <button 
+                                            type='button' 
+                                            name='cancel_new_artist_btn'
+                                            onClick={() => setNewArtist(false)}>
+                                            Cancel
+                                        </button>
 
                                     </>
                                 )}
