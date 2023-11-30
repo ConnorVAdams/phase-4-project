@@ -6,7 +6,6 @@
 from flask import request
 from flask_restful import Resource
 from datetime import datetime
-import requests
 
 # Local imports
 from config import app, db, api
@@ -35,16 +34,16 @@ class Artists(Resource):
         return artists, 200
     
     def post(self):
-            try:
-                data = request.get_json()
-                new_artist = Artist(**data)
-                db.session.add(new_artist)
-                db.session.commit()
-                return new_artist.to_dict(), 201
-            except Exception as e:
-                db.session.rollback()
-                return {'error': str(e)}, 400
-        
+        try:
+            data = request.get_json()
+            new_artist = Artist(**data)
+            db.session.add(new_artist)
+            db.session.commit()
+            return new_artist.to_dict(), 201
+        except Exception as e:
+            db.session.rollback()
+            return {'error': str(e)}, 400
+    
 api.add_resource(Artists, '/artists')
 
 class ArtistByID(Resource):
@@ -195,50 +194,6 @@ class Concerts(Resource):
             return {'error': str(e)}, 400
 
 api.add_resource(Concerts, '/concerts')
-
-class ConcertAndArtist(Resource):
-    def post(self):
-        try:
-            data = request.get_json()
-
-            concert_data = {
-                'date_time': data['date_time'],
-                'price': data['price'],
-                'artist_id': data['artist_id'],
-                'venue_id': data['venue_id'],
-                'tix_low': data['tix_low'],
-                'sold_out': data['sold_out'],
-            }
-
-            artist_data = {
-                'name': data['artist_name'],
-                'genre': data['artist_genre'],
-                'description': data['artist_description']
-            }
-
-            try:
-                artist_response = requests.post('http://127.0.0.1:5555/api/v1/artists', json=artist_data)
-                artist_response_data = artist_response.json()
-
-                concert_data['artist_id'] = artist_response_data['id']
-
-            except Exception as e:
-                db.session.rollback()
-                return {'error': str(e)}, 400
-            
-            try:
-                concert_response = requests.post('http://127.0.0.1:5555/api/v1/concerts', json=concert_data)
-
-            except Exception as e:
-                db.session.rollback()
-                return {'error': str(e)}, 400
-        # Return new artist id from db
-
-        # On success, send values and new artist id to post method in /concerts route
-        except Exception as e:
-            db.session.rollback()
-            return {'error': str(e)}, 400
-api.add_resource(ConcertAndArtist, '/concert_and_artist')
 
 class ConcertByID(Resource):
 
