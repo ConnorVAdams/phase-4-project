@@ -199,6 +199,24 @@ class Concerts(Resource):
 
 api.add_resource(Concerts, '/concerts')
 
+class ConcertAndArtist(Resource):
+    def post(self):
+        # Get json data
+        try:
+            data = request.get_json()
+            print(data)
+        # Hold that data in this scope
+
+        # Attempt to post artist to db
+
+        # Return new artist id from db
+
+        # On success, send values and new artist id to post method in /concerts route
+        except Exception as e:
+            db.session.rollback()
+            return {'error': str(e)}, 400
+api.add_resource(ConcertAndArtist, '/concert_and_artist')
+
 class ConcertByID(Resource):
 
     def get(self, id):

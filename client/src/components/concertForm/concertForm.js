@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
-import { Container, Row, Col, Button, } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 // import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
@@ -57,7 +57,7 @@ const ConcertForm = () => {
                     tix_low: 0,
                     sold_out: 0,
                     artist_name: '',
-                    artist_genre: '',
+                    artist_genre: 'Other',
                     artist_description: ''
                 }}
                 validationSchema={concertFormSchema}
@@ -71,28 +71,49 @@ const ConcertForm = () => {
 
                     delete values.date
                     delete values.time
-                    delete values.artist_name
-                    delete values.artist_genre
-                    delete values.artist_description
 
-                    try {
-                        const response = await fetch('/api/v1/concerts', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(values),
-                        })
-            
-                        if (response.ok) {
-                            console.log('Form submitted successfully:', response.status);
-                        } else {
-                            console.error('Response not ok:', response.status);
+                    if (!newArtist) {
+                        delete values.artist_name
+                        delete values.artist_genre
+                        delete values.artist_description
+
+                        try {
+                            const response = await fetch('/api/v1/concerts', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(values),
+                            })
+                
+                            if (response.ok) {
+                                console.log('Form submitted successfully:', response.status);
+                            } else {
+                                console.error('Response not ok:', response.status);
+                            }
+                        } catch (error) {
+                            console.error('Error submitting form:', error);
                         }
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                    }
+                    } else {
+                        try {
+                            const response = await fetch('/api/v1/concert_and_artist', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(values),
+                            })
+                
+                            if (response.ok) {
+                                console.log('Form submitted successfully:', response.status);
+                            } else {
+                                console.error('Response not ok:', response.status);
+                            }
+                        } catch (error) {
+                            console.error('Error submitting form:', error);
+                        }
                 }
+            }
             }
             >
                 {formik => {
@@ -100,7 +121,7 @@ const ConcertForm = () => {
                     return (
                         <div className='concert-form'>
                             <Form>
-                                <div className='form-field'>
+                                <div className='form-field my-3'>
                                     <label htmlFor='date'>Date</label><br/>
                                     <Field
                                         type='date'
@@ -111,7 +132,7 @@ const ConcertForm = () => {
                                     <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
                                 
-                                <div className='form-field'>
+                                <div className='form-field my-3'>
                                     <label htmlFor='time'>Time</label><br/>
                                     <Field
                                         type='time'
@@ -122,7 +143,7 @@ const ConcertForm = () => {
                                     <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
-                                <div className='form-field'>
+                                <div className='form-field my-3'>
                                     <label htmlFor='price'>Price</label><br/>
                                     <Field
                                         type='price'
@@ -159,20 +180,22 @@ const ConcertForm = () => {
 
                                     {!newArtist && (
                                         <>
-                                            <label htmlFor='add_new_artist_btn'>or Add New Artist</label><br/>
+                                            <label htmlFor='add_new_artist_btn'>Or </label>
                                             <Button 
                                                 type='button' 
                                                 name='add_new_artist_btn'
+                                                className='mx-2'
                                                 onClick={() => setNewArtist(true)}>
-                                                New Artist
+                                                Add New Artist
                                             </Button>
                                         </>
                                     )}
 
-                                <div>
+                                <div className={newArtist ? `rounded border border-primary border-2 p-3`: null}>
                                     {newArtist && (
                                         <>
-                                            <div className='form-field'>
+                                            <h4>New Artist</h4>
+                                            <div className='form-field my-3'>
                                                 <label htmlFor='artist_name'>Name</label><br/>
                                                 <Field
                                                     type='text'
@@ -193,7 +216,7 @@ const ConcertForm = () => {
                                                 <ErrorMessage name='artist_name' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                             </div>
 
-                                            <div className='form-field'>
+                                            <div className='form-field my-3'>
                                                 <label htmlFor='genre'>Genre</label><br/>
                                                 <Field
                                                     as='select'
@@ -212,7 +235,7 @@ const ConcertForm = () => {
                                                 <ErrorMessage name='genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
                                             </div>
 
-                                            <div className='form-field'>
+                                            <div className='form-field my-3'>
                                                 <label htmlFor='artist_description'>Description</label><br/>
                                                 <Field
                                                     type='text'
@@ -234,7 +257,7 @@ const ConcertForm = () => {
                                     )}
                                 </div>
 
-                                <div className='form-field'>
+                                <div className='form-field my-3'>
                                     <label htmlFor='venue_id'>Venue</label><br/>
                                     <Field
                                         as='select'
