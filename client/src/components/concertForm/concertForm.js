@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 // import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
@@ -121,27 +121,29 @@ const ConcertForm = () => {
                     return (
                         <div className='concert-form'>
                             <Form>
-                                <div className='form-field my-3'>
-                                    <label htmlFor='date'>Date</label><br/>
-                                    <Field
-                                        type='date'
-                                        name='date'
-                                        id='date'
-                                        className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
-                                    />
-                                    <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
-                                </div>
-                                
-                                <div className='form-field my-3'>
-                                    <label htmlFor='time'>Time</label><br/>
-                                    <Field
-                                        type='time'
-                                        name='time'
-                                        id='time'
-                                        className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
-                                    />
-                                    <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
-                                </div>
+                                <Row>
+                                    <Col>
+                                        <label htmlFor='date'>Date</label><br/>
+                                        <Field
+                                            type='date'
+                                            name='date'
+                                            id='date'
+                                            className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
+                                        />
+                                        <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
+                                    
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor='time'>Time</label><br/>
+                                        <Field
+                                            type='time'
+                                            name='time'
+                                            id='time'
+                                            className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
+                                        />
+                                        <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
+                                    </Col>
+                                </Row>
 
                                 <div className='form-field my-3'>
                                     <label htmlFor='price'>Price</label><br/>

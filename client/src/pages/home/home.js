@@ -1,6 +1,6 @@
-import Jumbotron from "../../components/homeJumbotron"
-import IntroBlurb from "../../components/introBlurb"
-import Reviews from "../../components/reviews"
+import Jumbotron from "../../components/homeJumbotron/jumbotron"
+import IntroBlurb from "../../components/introBlurb/introBlurb"
+import Reviews from "../../components/reviews/"
 
 const Home = () => {
     return (
