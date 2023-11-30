@@ -53,7 +53,10 @@ const ConcertForm = () => {
                 artist_id: '',
                 venue_id: '',
                 tix_low: 0,
-                sold_out: 0
+                sold_out: 0,
+                artist_name: '',
+                artist_genre: '',
+                artist_description: ''
             }}
             validationSchema={concertFormSchema}
             onSubmit={async (values) => {
@@ -216,7 +219,13 @@ const ConcertForm = () => {
 
                                         <button 
                                             type='submit' 
-                                            name='cancel_new_artist_btn'>
+                                            name='cancel_new_artist_btn'
+                                            onSubmit={() => {
+                                                // Attempt to post new artist to database.
+                                                // On success, re-render component, migrating over other existing field values
+                                                // Display new artist name in drop down and change its value to that new artist 
+                                            }}
+                                            >
                                             Add Artist
                                         </button>
 

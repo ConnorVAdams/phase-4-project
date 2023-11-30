@@ -90,6 +90,10 @@ class Artist(db.Model, SerializerMixin):
             raise TypeError(
                 'Name must be a string.'
             )
+        elif not len(new_name) in range(1, 31):
+            raise ValueError(
+                'Genre must be between 1 and 30 characters.'
+            )
         return new_name
     
     @validates('genre')
@@ -112,6 +116,10 @@ class Artist(db.Model, SerializerMixin):
         if not isinstance(new_description, str):
             raise TypeError(
                 'Description must be a string.'
+            )
+        elif not len(new_description) in range(1, 201):
+            raise ValueError(
+                'Genre must be between 1 and 200 characters.'
             )
         return new_description
 

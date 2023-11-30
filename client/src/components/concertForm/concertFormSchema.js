@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
-// import artistFormSchema from '../artistForm/artistFormSchema'
+
+
 
 const concertFormSchema = Yup.object().shape({
     date: Yup
@@ -23,6 +24,19 @@ const concertFormSchema = Yup.object().shape({
     .number()
     .integer()
     .required('Artist is required.'), 
+
+    artist_name: Yup
+    .string(30)
+    .required('Name is required.')
+    ,
+
+    artist_genre: Yup
+    .string(20)
+    .required('Genre is required.'),
+
+    artist_description: Yup
+    .string(200)
+    .required('Description is required.'),
 
     venue_id: Yup
     .number()
