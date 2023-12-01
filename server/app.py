@@ -6,6 +6,7 @@
 from flask import request
 from flask_restful import Resource
 from datetime import datetime
+import requests
 
 # Local imports
 from config import app, db, api
