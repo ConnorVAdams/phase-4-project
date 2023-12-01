@@ -59,8 +59,8 @@ const ConcertForm = () => {
                     artist_genre: '',
                     artist_description: ''
                 }}
-                // validationSchema={concertFormSchema(newArtist)}
-                onSubmit={async (values) => {
+                validationSchema={concertFormSchema(newArtist)}
+                onSubmit={async (values, { resetForm }) => {
                     values.date_time = `${values.date} ${values.time}`
                     values.price = Number(values.price)
                     values.artist_id = Number(values.artist_id)
@@ -103,7 +103,7 @@ const ConcertForm = () => {
                                 },
                                 body: JSON.stringify(values),
                             })
-                            console.log(response)
+                            
                             if (response.ok) {
                                 console.log('Form submitted successfully:', response.status);
                             } else {
@@ -113,8 +113,9 @@ const ConcertForm = () => {
                             console.error('Error submitting form:', error);
                         }
                 }
-            }
-            }
+                resetForm()
+                setNewArtist(false)
+            }}
             >
                 {formik => {
                     const { errors, touched, setFieldValue, setFieldError } = formik
