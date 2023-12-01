@@ -1,24 +1,36 @@
 import { Card, Button, ListGroup } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
+import { useState } from 'react'
+import BuyTicketModal from '../buyTicketModal/buyTicketModal';
+import triggerConfetti from '../../util/confettiEffect';
 
 const ConcertCard = ({event}) => {
 
+    
     const { addToUserTickets } = useOutletContext()
-
+    
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
+    
+    const handleShowModal = () => setShowModal(true); // Function to show the modal
+    const handleCloseModal = () => setShowModal(false); // Function to hide the modal
+    
     const artistName = event.artist.name
     const venueName = event.venue.name
     const venueLocation = event.venue.location
-
+    
     function addConcert(){
         addToUserTickets(event)
+        handleShowModal()
+        triggerConfetti()
     }
     
     return (
+        <>
         <Card className="text-center my-5">
             <Card.Img src="./assets/concert_placeholder.png" className="img-fluid"/>
             <ListGroup>
                 <ListGroup.Item>
-                    <Card.Title className="display-4">{artistName}</Card.Title>
+                    <Card.Title className="display-4 d-flex flex-column justify-content-center" style={{height: "9rem"}}>{artistName}</Card.Title>
                 </ListGroup.Item>
                 <ListGroup.Item>
                     <Card.Text className="lead">{event.date}</Card.Text>
@@ -36,6 +48,8 @@ const ConcertCard = ({event}) => {
                 </ListGroup.Item>
             </ListGroup>
         </Card>
+        <BuyTicketModal show={showModal} handleClose={handleCloseModal} />
+        </>
     );
 }
 

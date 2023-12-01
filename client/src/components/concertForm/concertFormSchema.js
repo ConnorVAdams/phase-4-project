@@ -5,18 +5,18 @@ const concertFormSchema = (newArtist) => {
         .number()
         .integer()
         .required('Artist is required.')
-    
+
     let artistNameValidator = Yup
         .string(30)
-        .required('Name is required.')
-    
+        .required()
+
     let artistGenreValidator = Yup
         .string(30)
-        .required('Genre is required.')
+        .required()
 
     let artistDescriptionValidator = Yup
         .string(200)
-        .required('Description is required.')
+        .required()
 
     if (newArtist) {
         artistIdValidator = undefined
@@ -59,4 +59,4 @@ const concertFormSchema = (newArtist) => {
     });
 };
 
-export default concertFormSchema;
+export default concertFormSchema

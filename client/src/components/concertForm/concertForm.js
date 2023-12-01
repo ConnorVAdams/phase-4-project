@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
-import { Container, Button } from 'react-bootstrap'
-// import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
@@ -60,7 +59,7 @@ const ConcertForm = () => {
                     artist_genre: '',
                     artist_description: ''
                 }}
-                validationSchema={concertFormSchema(newArtist)}
+                validationSchema={concertFormSchema}
                 onSubmit={async (values) => {
                     values.date_time = `${values.date} ${values.time}`
                     values.price = Number(values.price)
@@ -121,27 +120,29 @@ const ConcertForm = () => {
                     return (
                         <div className='concert-form'>
                             <Form>
-                                <div className='form-field my-3'>
-                                    <label htmlFor='date'>Date</label><br/>
-                                    <Field
-                                        type='date'
-                                        name='date'
-                                        id='date'
-                                        className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
-                                    />
-                                    <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
-                                </div>
-                                
-                                <div className='form-field my-3'>
-                                    <label htmlFor='time'>Time</label><br/>
-                                    <Field
-                                        type='time'
-                                        name='time'
-                                        id='time'
-                                        className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
-                                    />
-                                    <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
-                                </div>
+                                <Row>
+                                    <Col>
+                                        <label htmlFor='date'>Date</label><br/>
+                                        <Field
+                                            type='date'
+                                            name='date'
+                                            id='date'
+                                            className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
+                                        />
+                                        <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
+                                    
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor='time'>Time</label><br/>
+                                        <Field
+                                            type='time'
+                                            name='time'
+                                            id='time'
+                                            className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
+                                        />
+                                        <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
+                                    </Col>
+                                </Row>
 
                                 <div className='form-field my-3'>
                                     <label htmlFor='price'>Price</label><br/>
@@ -218,12 +219,12 @@ const ConcertForm = () => {
                                             </div>
 
                                             <div className='form-field my-3'>
-                                                <label htmlFor='artist_genre'>Genre</label><br/>
+                                                <label htmlFor='genre'>Genre</label><br/>
                                                 <Field
                                                     as='select'
-                                                    name='artist_genre'
-                                                    id='artist_genre'
-                                                    className={`form-control ${errors.artist_genre && touched.artist_genre ? 'input-error' : null}`}
+                                                    name='genre'
+                                                    id='genre'
+                                                    className={`form-control ${errors.genre && touched.genre ? 'input-error' : null}`}
                                                 >
                                                     <option value=''>Select Genre</option>
                                                     {Array.from(new Set(artists.map(artist => artist.genre))).map((genre, index) => (
@@ -233,7 +234,7 @@ const ConcertForm = () => {
                                                     ))}
                                                     <option value='Other'>Other</option>
                                                 </Field>
-                                                <ErrorMessage name='artist_genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
+                                                <ErrorMessage name='genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
                                             </div>
 
                                             <div className='form-field my-3'>

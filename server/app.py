@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-# Standard library imports
-
 # Remote library imports
 from flask import request
 from flask_restful import Resource
 from datetime import datetime
 import requests
+from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
@@ -14,11 +13,9 @@ from config import app, db, api
 # Add your model imports
 from models import db, Venue, Artist, Concert
 
-# Views go here!
-
 @app.route('/')
 def index():
-    return '<h1>Project Server</h1>'
+    return '<h1>StageFinder</h1>'
 
 # *************
 # ARTIST ROUTES
@@ -35,16 +32,20 @@ class Artists(Resource):
         return artists, 200
     
     def post(self):
-            try:
-                data = request.get_json()
-                new_artist = Artist(**data)
-                db.session.add(new_artist)
-                db.session.commit()
-                return new_artist.to_dict(), 201
-            except Exception as e:
-                db.session.rollback()
-                return {'error': str(e)}, 400
-        
+        try:
+            data = request.get_json()
+            new_artist = Artist(**data)
+            db.session.add(new_artist)
+            db.session.commit()
+            return new_artist.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create artist due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
+        except Exception as e:
+            db.session.rollback()
+            return {'error': str(e)}, 400
+    
 api.add_resource(Artists, '/artists')
 
 class ArtistByID(Resource):
@@ -115,6 +116,10 @@ class Venues(Resource):
             db.session.add(new_venue)
             db.session.commit()
             return new_venue.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create venue due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
@@ -164,11 +169,7 @@ class ConcertsForVenue(Resource):
 
     def get(self, id):
         if venue := db.session.get(Venue, id):
-            return [concert.to_dict(
-                rules=(
-                    '-venue',
-                )
-            ) for concert in venue.concerts], 200
+            return [concert.to_dict() for concert in venue.concerts], 200
         return {'error': f'No venue with ID {id} found.'}, 404
 
 api.add_resource(ConcertsForVenue, '/venues/<int:id>/concerts')
@@ -194,6 +195,10 @@ class Concerts(Resource):
             db.session.add(new_concert)
             db.session.commit()
             return new_concert.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create concert due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
@@ -236,22 +241,18 @@ class ConcertAndArtist(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {'error': str(e)}, 400
-        # Return new artist id from db
-
-        # On success, send values and new artist id to post method in /concerts route
+            
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
 api.add_resource(ConcertAndArtist, '/concert_and_artist')
+
 
 class ConcertByID(Resource):
 
     def get(self, id):
         if concert := db.session.get(Concert, id):
             return concert.to_dict(
-                rules=(
-
-                )
             ), 200
         return {'error': f'No concert with ID {id} found.'}, 404
     
