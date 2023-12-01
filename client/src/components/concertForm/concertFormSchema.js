@@ -28,18 +28,18 @@ const concertFormSchema = (newArtist) => {
 
     return Yup.object().shape({
         date: Yup
-            .date()
+            .date('Date must be a string.')
             .required('Date is required.')
             .min(new Date(), 'Date must be in the future.'),
 
         time: Yup
-            .string()
+            .string('Time must be a string.')
             .required('Time is required.')
             .matches(/^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9])$/, 'Invalid time format. Please use HH:MM.')
             .matches(/(00|15|30|45)$/, 'Time must end in 00, 15, 30, or 45.'),
 
         price: Yup
-            .number()
+            .number('Price must be an integer.')
             .required('Price is required.')
             .integer('Price must be an integer.')
             .moreThan(-1, 'Price must be 0 or greater.'),
