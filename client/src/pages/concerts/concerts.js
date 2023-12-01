@@ -8,15 +8,23 @@ import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron";
 const URL = "http://127.0.0.1:5555/api/v1/concerts";
 
 const Concerts = () => {
+    
+    // Fetching concert data
+    const { data } = useFetch(URL);
+
+    // Temporary state for holding search input before applying filters
     let [tempCity, setTempCity] = useState('');
     let [tempArtist, setTempArtist] = useState('');
+
+    // State for storing the applied search filters
     let [city, setCity] = useState('');
     let [artist, setArtist] = useState('');
+
+    // Pagination state: current page and items per page
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(9); // Adjust as needed
 
-    const { data } = useFetch(URL);
-
+    // Handlers for updating temporary search state
     const changeTempSearchByCity = (e) => {
         setTempCity(e.target.value);
     };
@@ -25,23 +33,30 @@ const Concerts = () => {
         setTempArtist(e.target.value);
     };
 
+    // Handler for applying search filters
     const applySearchFilters = () => {
+        // Update the actual search state with the temporary state
         setCity(tempCity);
         setArtist(tempArtist);
-        setCurrentPage(1); // Reset to the first page after applying filters
+        // Reset to the first page after applying filters
+        setCurrentPage(1);
     };
 
+    // Filtering concerts based on search filters
     const filteredConcerts = data
-        .filter(concert => city ? concert.venue.location.toLowerCase().includes(city) : concert)
-        .filter(concert => artist ? concert.artist.name.toLowerCase().includes(artist) : concert);
+        .filter(concert => city ? concert.venue.location.toLowerCase().includes(city.toLowerCase()) : true)
+        .filter(concert => artist ? concert.artist.name.toLowerCase().includes(artist.toLowerCase()) : true);
 
     // Pagination logic
+    // Calculate the total number of pages
     const totalPages = Math.ceil(filteredConcerts.length / itemsPerPage);
+    // Determine the range of items for the current page
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // Slice the array of items to get only those for the current page
     const currentItems = filteredConcerts.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Change page
+    // Handler for changing page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
@@ -50,16 +65,20 @@ const Concerts = () => {
             <Container>
                 <Row>
                     <Col>
+                        {/* Temporary search input for artist */}
                         <SearchBar label="Filter By Artist" searchTerm={changeTempSearchByArtist} />
                     </Col>
                     <Col>
+                        {/* Temporary search input for city */}
                         <SearchBar label="Filter By City" searchTerm={changeTempSearchByCity} />
                     </Col>
                     <Col className="d-flex flex-column justify-content-end">
+                        {/* Button to apply search filters */}
                         <Button variant="secondary" onClick={applySearchFilters}>Search</Button>
                     </Col>
                 </Row>
                 <Row>
+                    {/* Rendering the current page's items */}
                     {currentItems.map((event, i) => (
                         <Col md={4} key={i}>
                             <ConcertCard event={event} />
@@ -67,6 +86,7 @@ const Concerts = () => {
                     ))}
                 </Row>
                 <Pagination size="lg" className="d-flex flex-row justify-content-center my-5">
+                    {/* Conditional rendering of pagination controls */}
                     {totalPages > 4 && (
                         <>
                             <Pagination.First onClick={() => paginate(1)} disabled={currentPage === 1} />
@@ -91,8 +111,3 @@ const Concerts = () => {
 };
 
 export default Concerts;
-
-
-
-
-
