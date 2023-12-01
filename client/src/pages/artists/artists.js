@@ -43,7 +43,7 @@ const Artists = () => {
 
     return (
         <>
-            <ModelJumbotron text="All Artists" image="./assets/jumbotron-concert-photo.jpg"/>
+            <ModelJumbotron text="All Artists"/>
             <Container>
                 <Row>
                     <Col md={6}>

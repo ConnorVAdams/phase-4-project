@@ -40,7 +40,7 @@ const Concerts = () => {
 
     return (
         <>
-            <ModelJumbotron image="./assets/jumbotron-concert-photo.jpg" text="All Concerts" />
+            <ModelJumbotron text="All Concerts" />
             <Container>
                 <Row>
                     <Col>

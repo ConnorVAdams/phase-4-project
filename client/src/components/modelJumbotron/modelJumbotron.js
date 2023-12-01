@@ -1,7 +1,7 @@
-const ModelJumbotron = ({ text, image }) => {
+const ModelJumbotron = ({ text }) => {
 
     const jumbotronStyle = {
-        backgroundImage: `url(${image})`,
+        backgroundImage: "url(./assets/jumbotron-concert-photo.jpg)",
         height: "25vh"
     }
 

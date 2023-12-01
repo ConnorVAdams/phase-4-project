@@ -34,7 +34,7 @@ const Venues = () => {
 
     return (
         <>
-            <ModelJumbotron image="./assets/jumbotron-concert-photo.jpg" text="All Venues" />
+            <ModelJumbotron text="All Venues" />
             <Container>
                 <Row>
                     <Col>
