@@ -18,6 +18,7 @@ const VenueConcertsCard = ({ concerts }) => {
 
     function addConcert(e) {
         const [ concert ] = concerts.filter(concert => concert.id === Number(e.target.dataset.concert_id))
+        console.log(concert)
         addToUserTickets(concert)
         handleShowModal()
         triggerConfetti()

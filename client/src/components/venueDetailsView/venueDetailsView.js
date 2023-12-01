@@ -8,7 +8,9 @@ const URL = 'http://127.0.0.1:5555/api/v1/venues'
 
 const VenueDetailsView = ({venue}) => {
 
-    const {data: concerts} = useFetch(`${URL}/${venue.id}/concerts`)
+    const { data: concerts } = useFetch(`${URL}/${venue.id}/concerts`)
+
+    console.log(concerts)
 
     return (
         <Container className="my-5 text-center">

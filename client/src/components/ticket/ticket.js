@@ -24,9 +24,11 @@ const Ticket = ({ ticket }) => {
           <Card.Body>
             <Card.Title>{concert.artist.name}</Card.Title>
             <Card.Text>
-              {concert.venue.name} | {concert.venue.location} | {concert.time}
+              {concert.venue.name}
             </Card.Text>
-
+            <Card.Text>
+              {concert.venue.location} | {concert.time}
+            </Card.Text>
                 <Dropdown drop="end">
 
                   <Dropdown.Toggle variant="dark">
@@ -40,8 +42,7 @@ const Ticket = ({ ticket }) => {
 
                 </Dropdown>
                 <div className="d-grid gap-2 mt-3">
-                <Button c onClick={showTicketModal} variant="primary" size="lg" >View Ticket</Button>
-
+                  <Button c onClick={showTicketModal} variant="primary" size="lg" >View Ticket</Button>
                 </div>
           </Card.Body>
         </Card>
