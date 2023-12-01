@@ -7,6 +7,7 @@ import MyTickets from './pages/myTickets/myTickets'
 import AddConcert from './pages/addConcert'
 import ArtistDetails from './pages/artistDetails/artistDetails'
 import VenueDetails from './pages/venueDetails/venueDetails'
+import SearchResults from './pages/searchResults'
 import ErrorComponent from './pages/errorComponent/errorComponent'
 
 const routes = [
@@ -18,6 +19,10 @@ const routes = [
             {
                 path: '/',
                 element: <Home />
+            },
+            {
+                path: "/search",
+                element: <SearchResults />
             },
             {
                 path: '/myTickets',
