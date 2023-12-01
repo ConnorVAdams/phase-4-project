@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
-// import { CustomHoursSelect, CustomMinutesSelect, CustomPeriodSelect } from './timePicker'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
