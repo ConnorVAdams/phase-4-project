@@ -11,7 +11,7 @@ const Concerts = () => {
     let [city, setCity] = useState('');
     let [artist, setArtist] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6); // Adjust as needed
+    const [itemsPerPage] = useState(9); // Adjust as needed
 
     const { data } = useFetch(URL);
 
@@ -57,7 +57,7 @@ const Concerts = () => {
                         </Col>
                     ))}
                 </Row>
-                <Pagination size="lg" className="d-flex flex-row justify-content-center">
+                <Pagination size="lg" className="d-flex flex-row justify-content-center my-5">
                     {totalPages > 4 && (
                         <>
                             <Pagination.First onClick={() => paginate(1)} disabled={currentPage === 1} />
