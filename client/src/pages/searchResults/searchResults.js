@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Pagination } from 'react-bootstrap';
 import ConcertCard from "../../components/concertCard/concertCard";
 import { useSearchParams } from 'react-router-dom';
@@ -11,13 +11,10 @@ const URL = "http://127.0.0.1:5555/api/v1/concerts";
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
-    const [concerts, setConcerts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(9); // Adjust as needed
 
-
     const { data } = useFetch(URL);
-
 
     // Apply query filter
     const filteredData = data.filter(concert => {
