@@ -5,14 +5,13 @@ from flask import request
 from flask_restful import Resource
 from datetime import datetime
 import requests
+from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
 
 # Add your model imports
 from models import db, Venue, Artist, Concert
-
-
 
 @app.route('/')
 def index():
@@ -39,6 +38,10 @@ class Artists(Resource):
             db.session.add(new_artist)
             db.session.commit()
             return new_artist.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create artist due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
@@ -113,6 +116,10 @@ class Venues(Resource):
             db.session.add(new_venue)
             db.session.commit()
             return new_venue.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create venue due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
@@ -188,6 +195,10 @@ class Concerts(Resource):
             db.session.add(new_concert)
             db.session.commit()
             return new_concert.to_dict(), 201
+        except IntegrityError as integrity_error:
+            db.session.rollback()
+            error_message = f'Integrity Error: Failed to create concert due to data integrity issues:\n{str(integrity_error)}'
+            return {'error': error_message}, 400
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
