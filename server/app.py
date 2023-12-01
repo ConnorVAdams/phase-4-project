@@ -209,7 +209,6 @@ class ConcertAndArtist(Resource):
     def post(self):
         try:
             data = request.get_json()
-
             concert_data = {
                 'date_time': data['date_time'],
                 'price': data['price'],

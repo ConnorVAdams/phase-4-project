@@ -60,7 +60,7 @@ const ConcertForm = () => {
                     artist_description: ''
                 }}
                 validationSchema={concertFormSchema(newArtist)}
-                onSubmit={async (values) => {
+                onSubmit={async (values, { resetForm }) => {
                     values.date_time = `${values.date} ${values.time}`
                     values.price = Number(values.price)
                     values.artist_id = Number(values.artist_id)
@@ -93,7 +93,8 @@ const ConcertForm = () => {
                         } catch (error) {
                             console.error('Error submitting form:', error);
                         }
-                    } else {
+                    } 
+                    else {
                         try {
                             const response = await fetch('/api/v1/concert_and_artist', {
                                 method: 'POST',
@@ -102,7 +103,7 @@ const ConcertForm = () => {
                                 },
                                 body: JSON.stringify(values),
                             })
-                
+                            
                             if (response.ok) {
                                 console.log('Form submitted successfully:', response.status);
                             } else {
@@ -112,8 +113,9 @@ const ConcertForm = () => {
                             console.error('Error submitting form:', error);
                         }
                 }
-            }
-            }
+                resetForm()
+                setNewArtist(false)
+            }}
             >
                 {formik => {
                     const { errors, touched, setFieldValue, setFieldError } = formik
@@ -219,11 +221,11 @@ const ConcertForm = () => {
                                             </div>
 
                                             <div className='form-field my-3'>
-                                                <label htmlFor='genre'>Genre</label><br/>
+                                                <label htmlFor='artist_genre'>Genre</label><br/>
                                                 <Field
                                                     as='select'
-                                                    name='genre'
-                                                    id='genre'
+                                                    name='artist_genre'
+                                                    id='artist_genre'
                                                     className={`form-control ${errors.genre && touched.genre ? 'input-error' : null}`}
                                                 >
                                                     <option value=''>Select Genre</option>
@@ -234,7 +236,7 @@ const ConcertForm = () => {
                                                     ))}
                                                     <option value='Other'>Other</option>
                                                 </Field>
-                                                <ErrorMessage name='genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
+                                                <ErrorMessage name='artist_genre' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>                                            
                                             </div>
 
                                             <div className='form-field my-3'>
