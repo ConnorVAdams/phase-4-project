@@ -24,7 +24,7 @@ const SearchResults = () => {
         // Set a timeout to simulate loading time
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [query]);
