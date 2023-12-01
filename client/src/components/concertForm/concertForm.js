@@ -56,7 +56,7 @@ const ConcertForm = () => {
                     tix_low: 0,
                     sold_out: 0,
                     artist_name: '',
-                    artist_genre: 'Other',
+                    artist_genre: '',
                     artist_description: ''
                 }}
                 validationSchema={concertFormSchema(newArtist)}
