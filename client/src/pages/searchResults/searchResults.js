@@ -5,6 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useFetch } from '../../hooks/customHooks';
 import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron";
 
+import './searchResults.css'
+
 const URL = "http://127.0.0.1:5555/api/v1/concerts";
 
 const SearchResults = () => {
@@ -48,16 +50,14 @@ const SearchResults = () => {
             <ModelJumbotron text="Search Results" />
             <Container>
                 {isLoading ? (
-                    <Row style={{height: "40vh"}}>
-                        <Col md={12}  className="d-flex flex-row justify-content-center">
-                            <Spinner animation="grow" />
-                        </Col>
-                    </Row>
+                    <div className="d-flex justify-content-center my-5" style={{height: "40vh"}}>
+                        <Spinner animation="border" />
+                    </div>
                 ) : (
                     <>
                         <Row>
                             {currentItems.map((event, i) => (
-                                <Col md={4} key={i}>
+                                <Col md={4} key={i} className="slide-down">
                                     <ConcertCard event={event} />
                                 </Col>
                             ))}
