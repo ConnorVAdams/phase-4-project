@@ -11,12 +11,6 @@ const ConcertForm = () => {
 
     const [showModal, setShowModal] = useState(false);
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     // Form submission logic here
-    //     setShowModal(true);
-    // };
-
     const handleClose = () => {
         setShowModal(false);
     };
@@ -298,7 +292,7 @@ const ConcertForm = () => {
                                     <ErrorMessage name='venue_id' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
 
-                                <Button type='submit'>Submit</Button>
+                                <Button size="lg" type='submit'>Submit</Button>
                             </Form>
                         </div>
                     )
