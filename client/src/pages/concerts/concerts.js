@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import { Container, Row, Col, Pagination, Button } from 'react-bootstrap';
 import ConcertCard from "../../components/concertCard/concertCard";
 import { useFetch } from '../../hooks/customHooks';
 import SearchBar from '../../components/searchBar';
@@ -8,6 +8,8 @@ import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron";
 const URL = "http://127.0.0.1:5555/api/v1/concerts";
 
 const Concerts = () => {
+    let [tempCity, setTempCity] = useState('');
+    let [tempArtist, setTempArtist] = useState('');
     let [city, setCity] = useState('');
     let [artist, setArtist] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,14 +17,18 @@ const Concerts = () => {
 
     const { data } = useFetch(URL);
 
-    const changeSearchByCity = (e) => {
-        setCurrentPage(1)
-        setCity(e.target.value);
+    const changeTempSearchByCity = (e) => {
+        setTempCity(e.target.value);
     };
 
-    const changeSearchByArtist = (e) => {
-        setCurrentPage(1)
-        setArtist(e.target.value);
+    const changeTempSearchByArtist = (e) => {
+        setTempArtist(e.target.value);
+    };
+
+    const applySearchFilters = () => {
+        setCity(tempCity);
+        setArtist(tempArtist);
+        setCurrentPage(1); // Reset to the first page after applying filters
     };
 
     const filteredConcerts = data
@@ -44,10 +50,13 @@ const Concerts = () => {
             <Container>
                 <Row>
                     <Col>
-                        <SearchBar label="Filter By Artist" searchTerm={changeSearchByArtist} />
+                        <SearchBar label="Filter By Artist" searchTerm={changeTempSearchByArtist} />
                     </Col>
                     <Col>
-                        <SearchBar label="Filter By City" searchTerm={changeSearchByCity} />
+                        <SearchBar label="Filter By City" searchTerm={changeTempSearchByCity} />
+                    </Col>
+                    <Col className="d-flex flex-column justify-content-center">
+                        <Button variant="secondary" onClick={applySearchFilters}>Search</Button>
                     </Col>
                 </Row>
                 <Row>
@@ -82,3 +91,8 @@ const Concerts = () => {
 };
 
 export default Concerts;
+
+
+
+
+
