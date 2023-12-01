@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Navbar as Navigation, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import ScrollIndicator from '../scrollIndicator/scrollIndicator';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -12,7 +14,7 @@ const Navbar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Add logic to handle search
+    navigate(`/search?query=${searchTerm}`);
   };
 
   return (
