@@ -159,6 +159,7 @@ if __name__ == '__main__':
         Artist.query.delete()
         Venue.query.delete()
         Concert.query.delete()
+        db.session.commit()
 
         print('Seeding artists...')
         artists = create_artists()

@@ -1,36 +1,45 @@
-import Header from "../../components/header"
-import ArtistCard from '../../components/artistCard'
-import { useFetch } from '../../hooks/customHooks'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useState } from 'react'
-import SearchBar from "../../components/searchBar/searchBar"
-import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron"
+import React, { useState } from 'react';
+import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import ArtistCard from '../../components/artistCard';
+import { useFetch } from '../../hooks/customHooks';
+import SearchBar from "../../components/searchBar/searchBar";
+import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron";
 
-
-const URL = 'http://127.0.0.1:5555/api/v1/artists'
+const URL = 'http://127.0.0.1:5555/api/v1/artists';
 
 const Artists = () => {
+    const { data } = useFetch(URL);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10); // Adjust as needed
 
-    const { data } = useFetch(URL)
-
-    let [ searchName, setSearchByName ] = useState('')
-    let [ searchGenre, setSearchGenre] = useState('')
+    let [searchName, setSearchByName] = useState('');
+    let [searchGenre, setSearchGenre] = useState('');
 
     const changeSearchByName = (e) => {
-        setSearchByName(e.target.value)
-    }
+        setCurrentPage(1)
+        setSearchByName(e.target.value);
+    };
 
     const changeSearchByGenre = (e) => {
-        setSearchGenre(e.target.value)
-    }
+        setCurrentPage(1)
+        setSearchGenre(e.target.value);
+    };
 
-    const filteredArists = data
+    const filteredArtists = data
         .filter(artist => {
-            return searchName ? artist.name.toLowerCase().includes(searchName) : artist
+            return searchName ? artist.name.toLowerCase().includes(searchName) : artist;
         })
         .filter(artist => {
-            return searchGenre ? artist.genre.toLowerCase().includes(searchGenre) : artist
-        })
+            return searchGenre ? artist.genre.toLowerCase().includes(searchGenre) : artist;
+        });
+
+    // Pagination logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredArtists.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
@@ -45,17 +54,22 @@ const Artists = () => {
                     </Col>
                 </Row>
                 <Row>
-                    {filteredArists.map(({id, name, genre}) => {
-                        return(
-                            <Col key={id} md={3}>
-                                <ArtistCard id={id} name={name} genre={genre} />
-                            </Col>
-                        )
-                    })}
+                    {currentItems.map(({id, name, genre}) => (
+                        <Col key={id} md={3}>
+                            <ArtistCard id={id} name={name} genre={genre} />
+                        </Col>
+                    ))}
                 </Row>
+                <Pagination size='lg' className="d-flex flex-row justify-content-center my-5">
+                    {[...Array(Math.ceil(filteredArtists.length / itemsPerPage)).keys()].map(number => (
+                        <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                            {number + 1}
+                        </Pagination.Item>
+                    ))}
+                </Pagination>
             </Container>
         </>
-    )
-}
+    );
+};
 
-export default Artists
+export default Artists;

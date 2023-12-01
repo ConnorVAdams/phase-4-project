@@ -1,28 +1,36 @@
-import Header from "../../components/header"
-import VenueCard from "../../components/venueCard/VenueCard"
-import { useFetch } from '../../hooks/customHooks'
-import { Container, Row, Col } from 'react-bootstrap'
-import { useState } from 'react'
-import SearchBar from "../../components/searchBar/searchBar"
-import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron"
+import React, { useState } from 'react';
+import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import VenueCard from "../../components/venueCard/VenueCard";
+import { useFetch } from '../../hooks/customHooks';
+import SearchBar from "../../components/searchBar/searchBar";
+import ModelJumbotron from "../../components/modelJumbotron/modelJumbotron";
 
-const URL = 'http://127.0.0.1:5555/api/v1/venues'
-
+const URL = 'http://127.0.0.1:5555/api/v1/venues';
 
 const Venues = () => {
+    const { data } = useFetch(URL);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10); // Adjust as needed
 
-    const { data } = useFetch(URL)
-
-    let [ searchTerm, setSearchTerm ] = useState('')
+    let [searchTerm, setSearchTerm] = useState('');
 
     const changeSearchTerm = (e) => {
-        setSearchTerm(e.target.value)
-    }
+        setCurrentPage(1)
+        setSearchTerm(e.target.value);
+    };
 
     const filteredVenues = data
         .filter(venue => {
-            return searchTerm ? venue.name.toLowerCase().includes(searchTerm) : venue
-        })
+            return searchTerm ? venue.name.toLowerCase().includes(searchTerm) : venue;
+        });
+
+    // Pagination logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredVenues.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
@@ -34,15 +42,22 @@ const Venues = () => {
                     </Col>
                 </Row>
                 <Row>
-                    {filteredVenues.map(({ id, name, location }) => (
+                    {currentItems.map(({ id, name, location }) => (
                         <Col md={3} key={id}>
                             <VenueCard id={id} name={name} location={location} />
                         </Col>
                     ))}
                 </Row>
+                <Pagination size="lg" className="d-flex flex-row justify-content-center my-5">
+                    {[...Array(Math.ceil(filteredVenues.length / itemsPerPage)).keys()].map(number => (
+                        <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                            {number + 1}
+                        </Pagination.Item>
+                    ))}
+                </Pagination>
             </Container>
         </>
-    )
-}
+    );
+};
 
-export default Venues
+export default Venues;
