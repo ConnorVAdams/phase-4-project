@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import { Container, Row, Col, Pagination, Button } from 'react-bootstrap';
 import VenueCard from "../../components/venueCard/VenueCard";
 import { useFetch } from '../../hooks/customHooks';
 import SearchBar from "../../components/searchBar/searchBar";
@@ -12,16 +12,17 @@ const Venues = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(8); // Adjust as needed
 
-    let [searchTerm, setSearchTerm] = useState('');
+    const [tempSearchTerm, setTempSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const changeSearchTerm = (e) => {
-        setCurrentPage(1)
-        setSearchTerm(e.target.value);
+    const applySearchFilters = () => {
+        setSearchTerm(tempSearchTerm);
+        setCurrentPage(1); // Reset to first page after applying filters
     };
 
     const filteredVenues = data
         .filter(venue => {
-            return searchTerm ? venue.name.toLowerCase().includes(searchTerm) : venue;
+            return searchTerm ? venue.name.toLowerCase().includes(searchTerm.toLowerCase()) : true;
         });
 
     // Pagination logic
@@ -37,8 +38,11 @@ const Venues = () => {
             <ModelJumbotron text="All Venues" />
             <Container>
                 <Row>
-                    <Col>
-                        <SearchBar label="Search Venues By Name" searchTerm={changeSearchTerm} />
+                    <Col md={6}>
+                        <SearchBar label="Search Venues By Name" searchTerm={(e) => setTempSearchTerm(e.target.value)} />
+                    </Col>
+                    <Col md={6} className="d-flex flex-column justify-content-end">
+                        <Button variant="secondary" onClick={applySearchFilters}>Apply Filters</Button>
                     </Col>
                 </Row>
                 <Row>

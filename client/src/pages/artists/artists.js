@@ -51,7 +51,7 @@ const Artists = () => {
                         <SearchBar label="Filter By Genre" searchTerm={(e) => setTempSearchGenre(e.target.value)}/>
                     </Col>
                     <Col md={4} className="d-flex flex-column justify-content-end">
-                        <Button onClick={applyFilters}>Apply Filters</Button>
+                        <Button variant="secondary" onClick={applyFilters}>Apply Filters</Button>
                     </Col>
                 </Row>
                 <Row>
