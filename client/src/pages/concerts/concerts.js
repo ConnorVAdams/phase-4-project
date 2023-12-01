@@ -11,7 +11,7 @@ const Concerts = () => {
     let [city, setCity] = useState('');
     let [artist, setArtist] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10); // Adjust as needed
+    const [itemsPerPage] = useState(6); // Adjust as needed
 
     const { data } = useFetch(URL);
 
@@ -44,10 +44,10 @@ const Concerts = () => {
             <Container>
                 <Row>
                     <Col>
-                        <SearchBar label="Filter By City" searchTerm={changeSearchByCity} />
+                        <SearchBar label="Filter By Artist" searchTerm={changeSearchByArtist} />
                     </Col>
                     <Col>
-                        <SearchBar label="Filter By Artist" searchTerm={changeSearchByArtist} />
+                        <SearchBar label="Filter By City" searchTerm={changeSearchByCity} />
                     </Col>
                 </Row>
                 <Row>

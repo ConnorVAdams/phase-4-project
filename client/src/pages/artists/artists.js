@@ -10,7 +10,7 @@ const URL = 'http://127.0.0.1:5555/api/v1/artists';
 const Artists = () => {
     const { data } = useFetch(URL);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10); // Adjust as needed
+    const [itemsPerPage] = useState(8); // Adjust as needed
 
     let [searchName, setSearchByName] = useState('');
     let [searchGenre, setSearchGenre] = useState('');
