@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import { Container, Row, Col, Pagination, Button } from 'react-bootstrap';
 import ArtistCard from '../../components/artistCard';
 import { useFetch } from '../../hooks/customHooks';
 import SearchBar from "../../components/searchBar/searchBar";
@@ -12,25 +12,23 @@ const Artists = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(8); // Adjust as needed
 
-    let [searchName, setSearchByName] = useState('');
-    let [searchGenre, setSearchGenre] = useState('');
+    const [tempSearchName, setTempSearchByName] = useState('');
+    const [tempSearchGenre, setTempSearchGenre] = useState('');
+    const [searchName, setSearchName] = useState('');
+    const [searchGenre, setSearchGenre] = useState('');
 
-    const changeSearchByName = (e) => {
-        setCurrentPage(1)
-        setSearchByName(e.target.value);
-    };
-
-    const changeSearchByGenre = (e) => {
-        setCurrentPage(1)
-        setSearchGenre(e.target.value);
+    const applyFilters = () => {
+        setSearchName(tempSearchName);
+        setSearchGenre(tempSearchGenre);
+        setCurrentPage(1); // Reset to first page after applying filters
     };
 
     const filteredArtists = data
         .filter(artist => {
-            return searchName ? artist.name.toLowerCase().includes(searchName) : artist;
+            return searchName ? artist.name.toLowerCase().includes(searchName.toLowerCase()) : true;
         })
         .filter(artist => {
-            return searchGenre ? artist.genre.toLowerCase().includes(searchGenre) : artist;
+            return searchGenre ? artist.genre.toLowerCase().includes(searchGenre.toLowerCase()) : true;
         });
 
     // Pagination logic
@@ -46,11 +44,14 @@ const Artists = () => {
             <ModelJumbotron text="All Artists"/>
             <Container>
                 <Row>
-                    <Col md={6}>
-                        <SearchBar label="Filter By Name" searchTerm={changeSearchByName}/>
+                    <Col md={4}>
+                        <SearchBar label="Filter By Name" searchTerm={(e) => setTempSearchByName(e.target.value)}/>
                     </Col>
-                    <Col md={6}>
-                        <SearchBar label="Filter By Genre" searchTerm={changeSearchByGenre}/>
+                    <Col md={4}>
+                        <SearchBar label="Filter By Genre" searchTerm={(e) => setTempSearchGenre(e.target.value)}/>
+                    </Col>
+                    <Col md={4} className="d-flex flex-column justify-content-end">
+                        <Button onClick={applyFilters}>Apply Filters</Button>
                     </Col>
                 </Row>
                 <Row>
