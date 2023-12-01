@@ -2,21 +2,21 @@ import * as Yup from 'yup';
 
 const concertFormSchema = (newArtist) => {
     let artistIdValidator = Yup
-        .number()
+        .number('')
         .integer()
         .required('Artist is required.')
 
     let artistNameValidator = Yup
         .string(30)
-        .required()
+        .required('Name is required.')
 
     let artistGenreValidator = Yup
         .string(30)
-        .required()
+        .required('Genre is required.')
 
     let artistDescriptionValidator = Yup
         .string(200)
-        .required()
+        .required('Description is required')
 
     if (newArtist) {
         artistIdValidator = undefined
