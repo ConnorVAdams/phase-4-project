@@ -55,7 +55,7 @@ const Concerts = () => {
                     <Col>
                         <SearchBar label="Filter By City" searchTerm={changeTempSearchByCity} />
                     </Col>
-                    <Col className="d-flex flex-column justify-content-center">
+                    <Col className="d-flex flex-column justify-content-end">
                         <Button variant="secondary" onClick={applySearchFilters}>Search</Button>
                     </Col>
                 </Row>
