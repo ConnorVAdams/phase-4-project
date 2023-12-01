@@ -2,11 +2,24 @@ import { useState, useEffect } from 'react'
 import { ErrorMessage, Field, Formik, Form } from 'formik'
 import concertFormSchema from './concertFormSchema'
 import { Container, Row, Col, Button } from 'react-bootstrap'
+import FormSubmissionComponent from '../formSubmissionModal/formSubmissionModal'
 
 const ConcertForm = () => {
     const [venues, setVenues] = useState([])
     const [artists, setArtists] = useState([])
     const [newArtist, setNewArtist] = useState(false)
+
+    const [showModal, setShowModal] = useState(false);
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     // Form submission logic here
+    //     setShowModal(true);
+    // };
+
+    const handleClose = () => {
+        setShowModal(false);
+    };
 
     useEffect(() => {
         const fetchVenues = async () => {
@@ -15,6 +28,7 @@ const ConcertForm = () => {
                 if (response.ok) {
                     const data = await response.json()
                     setVenues(data)
+
                 } else {
                     console.error('Response not ok:', response.status)
                 }
@@ -87,6 +101,9 @@ const ConcertForm = () => {
                 
                             if (response.ok) {
                                 console.log('Form submitted successfully:', response.status);
+                                setShowModal(true);
+                                resetForm()
+                                setNewArtist(false)
                             } else {
                                 console.error('Response not ok:', response.status);
                             }
@@ -106,6 +123,9 @@ const ConcertForm = () => {
                             
                             if (response.ok) {
                                 console.log('Form submitted successfully:', response.status);
+                                setShowModal(true);
+                                resetForm()
+                                setNewArtist(false)
                             } else {
                                 console.error('Response not ok:', response.status);
                             }
@@ -113,8 +133,6 @@ const ConcertForm = () => {
                             console.error('Error submitting form:', error);
                         }
                 }
-                resetForm()
-                setNewArtist(false)
             }}
             >
                 {formik => {
@@ -129,7 +147,7 @@ const ConcertForm = () => {
                                             type='date'
                                             name='date'
                                             id='date'
-                                            className={`form-control ${errors.date && touched.date ? 'input-error' : null}`}
+                                            className={`form-control  form-control-lg ${errors.date && touched.date ? 'input-error' : null}`}
                                         />
                                         <ErrorMessage name='date' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                     
@@ -140,7 +158,7 @@ const ConcertForm = () => {
                                             type='time'
                                             name='time'
                                             id='time'
-                                            className={`form-control ${errors.time && touched.time ? 'input-error' : null}`}
+                                            className={`form-control  form-control-lg ${errors.time && touched.time ? 'input-error' : null}`}
                                         />
                                         <ErrorMessage name='time' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                     </Col>
@@ -152,7 +170,7 @@ const ConcertForm = () => {
                                         type='price'
                                         name='price'
                                         id='price'
-                                        className={`form-control ${errors.price && touched.price ? 'input-error' : null}`}
+                                        className={`form-control  form-control-lg ${errors.price && touched.price ? 'input-error' : null}`}
                                     />
                                     <ErrorMessage name='price' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                 </div>
@@ -164,7 +182,7 @@ const ConcertForm = () => {
                                         as='select'
                                         name='artist_id'
                                         id='artist_id'
-                                        className={`form-control ${errors.artist_id && touched.artist_id ? 'input-error' : null}`}
+                                        className={`form-control  form-control-lg ${errors.artist_id && touched.artist_id ? 'input-error' : null}`}
                                         onChange={(e) => {
                                             setFieldValue('artist_id', e.target.value)
                                             setNewArtist(false)
@@ -205,7 +223,7 @@ const ConcertForm = () => {
                                                     type='text'
                                                     name='artist_name'
                                                     id='artist_name'
-                                                    className={`form-control ${errors.artist_name && touched.artist_name ? 'input-error' : null}`}
+                                                    className={`form-control  form-control-lg ${errors.artist_name && touched.artist_name ? 'input-error' : null}`}
                                                     onChange={(e) => {
                                                         const artistNames = artists.map(artist => artist.name.toUpperCase())
                                                         const enteredName = e.target.value.toUpperCase()
@@ -226,7 +244,7 @@ const ConcertForm = () => {
                                                     as='select'
                                                     name='artist_genre'
                                                     id='artist_genre'
-                                                    className={`form-control ${errors.genre && touched.genre ? 'input-error' : null}`}
+                                                    className={`form-control  form-control-lg ${errors.genre && touched.genre ? 'input-error' : null}`}
                                                 >
                                                     <option value=''>Select Genre</option>
                                                     {Array.from(new Set(artists.map(artist => artist.genre))).map((genre, index) => (
@@ -245,7 +263,7 @@ const ConcertForm = () => {
                                                     type='text'
                                                     name='artist_description'
                                                     id='artist_description'
-                                                    className={`form-control ${errors.artist_description && touched.artist_description ? 'input-error' : null}`}
+                                                    className={`form-control  form-control-lg ${errors.artist_description && touched.artist_description ? 'input-error' : null}`}
                                                 />
                                                 <ErrorMessage name='artist_description' render={(msg) => <div className='alert alert-warning'>{msg}</div>}/>
                                             </div>
@@ -267,7 +285,7 @@ const ConcertForm = () => {
                                         as='select'
                                         name='venue_id'
                                         id='venue_id'
-                                        className={`form-control ${errors.venue_id && touched.venue_id ? 'input-error' : null}`}
+                                        className={`form-control  form-control-lg ${errors.venue_id && touched.venue_id ? 'input-error' : null}`}
 
                                     >
                                         <option value=''>Select Venue</option>
@@ -286,6 +304,7 @@ const ConcertForm = () => {
                     )
                 }}
             </Formik>
+            <FormSubmissionComponent show={showModal} handleClose={handleClose} />
         </Container>
     )
 }
